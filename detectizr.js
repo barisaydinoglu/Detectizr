@@ -2,7 +2,7 @@
  * Detectizr v1.0
  * http://barisaydinoglu.github.com/Detectizr/
  * https://github.com/barisaydinoglu/Detectizr
- * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright � 2012
+ * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright © 2012
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
