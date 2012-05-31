@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640" />
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Detectizr by barisaydinoglu</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/barisaydinoglu/Detectizr">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Detectizr</h1>
+            <h2>A Modernizr extension to detect device, device model, screen size, operating system, and browser details.</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/barisaydinoglu/Detectizr/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/barisaydinoglu/Detectizr/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h1>Detectizr</h1>
+
+<p>Detectizr is a Modernizr extension to detect</p>
+
+<ul>
+<li>device</li>
+<li>device model</li>
+<li>screen size</li>
+<li>operating system</li>
+<li>operating system version</li>
+<li>browser</li>
+<li>browser version</li>
+<li>browser engine</li>
+<li>browser plugins</li>
+</ul><p>Detection of these sets are optional and can be disabled.</p>
+
+<p>Detectable device types are: tv (includes smart tv and game console), mobile, tablet, and desktop.
+Device models of tv, mobile and tablet are being detected.</p>
+
+<p>Code quality of Detectizr is validated via <a href="http://www.jslint.com" title="JSLint">JSLint</a> &amp; <a href="http://www.jshint.com" title="JSHint">JSHint</a>.</p>
+
+<h1>Sample Usage</h1>
+
+<p>This is a library that uses your trusty little Modernizr to give you the possibility of specifying required features for a certain stylesheet.
+Using it is a simple matter, illustrated in the following excerpt:</p>
+
+<div class="highlight">
+<pre><span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"modernizr.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"detectizr.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+      <span class="nx">Modernizr</span><span class="p">.</span><span class="nx">Detectizr</span><span class="p">.</span><span class="nx">detect</span><span class="p">({</span><span class="nx">detectScreen</span><span class="o">:</span><span class="kc">false</span><span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre>
+</div>
+
+
+<p>Just remember to include Modernizr before Detectizr, and you're good to go!</p>
+
+<p>Licensed under MIT license.</p>
+
+<h2>Other interesting projects</h2>
+
+<ul>
+<li>
+<a href="https://github.com/Modernizr/Modernizr" title="Modernizr">Modernizr</a> is required for Detectizer. Remember to put Modernizr before Detectizr.</li>
+<li>
+<a href="https://github.com/bjankord/Categorizr" title="Categorizr">Categorizr</a> is a server side device and OS detection script wirtten in PHP. Detectizr inspired by its device detection.</li>
+<li>
+<a href="http://rafael.adm.br/css_browser_selector/" title="CSS Browser Selector">CSS Browser Selector</a> is a client side browser detection script. Detectizr inspired by its browser detection.</li>
+</ul>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/barisaydinoglu">barisaydinoglu</a> can be found on <a href="https://github.com/barisaydinoglu/Detectizr">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
