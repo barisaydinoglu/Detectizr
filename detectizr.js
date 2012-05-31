@@ -1,5 +1,5 @@
 /*!
- * Detectizr v1.1
+ * Detectizr v1.2
  * http://barisaydinoglu.github.com/Detectizr/
  * https://github.com/barisaydinoglu/Detectizr
  * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright © 2012
