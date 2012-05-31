@@ -16,7 +16,9 @@ Detection of these sets are optional and can be disabled.
 
 Detectable device types are: tv (includes smart tv and game console), mobile, tablet, and desktop.
 Device models of tv, mobile and tablet are being detected.
- 
+
+Code quality of Detectizr is validated via (http://www.jslint.com "JSLint") & (http://www.jshint.com "JSHint").
+
 Sample Usage
 =========
 
