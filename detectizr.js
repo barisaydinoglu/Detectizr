@@ -1,5 +1,5 @@
 /*!
- * Detectizr v1.0
+ * Detectizr v1.1
  * http://barisaydinoglu.github.com/Detectizr/
  * https://github.com/barisaydinoglu/Detectizr
  * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright © 2012
@@ -40,7 +40,9 @@
             // option for enabling detection of operating system type and version
             detectOS: true,
             // option for enabling detection of browser type and version
-            detectBrowser: true
+            detectBrowser: true,
+            // option for enabling detection of common browser plugins
+            detectPlugins: true
         };
     function Detectizr(opt) {
         // Create Global 'extend' method, so Detectizr does not need jQuery.extend
@@ -59,7 +61,29 @@
         var that = this,
             device = Modernizr.Detectizr.device,
             deviceTypes = ['tv', 'tablet', 'mobile', 'desktop'],
-            i;
+            plugins2detect = {
+                java: {
+                    substrs: ["Java"],
+                    progIds: ["JavaWebStart.isInstalled"]
+                },
+                acrobat: {
+                    substrs: ["Adobe", "Acrobat"],
+                    progIds: ["AcroPDF.PDF", "PDF.PDFCtrl.5"]
+                },
+                flash: {
+                    substrs: ["Shockwave", "Flash"],
+                    progIds: ["ShockwaveFlash.ShockwaveFlash"]
+                },
+                mediaplayer: {
+                    substrs: ["Windows Media"],
+                    progIds: ["MediaPlayer.MediaPlayer"]
+                },
+                silverlight: {
+                    substrs: ["Silverlight"],
+                    progIds: ["AgControl.AgControl"]
+                }
+            },
+            i, j, k, l;
         options = extend({}, options, opt || {});
         // simplified and localized indexOf method as one parameter fixed as useragent
         that.is = function (key) {
@@ -291,6 +315,48 @@
             }
             that.addConditionalTest(device.browserEngine, true);
         }
+
+        /** Plugin detection **/
+        if (options.detectPlugins) {
+            that.detectPlugin = function (substrs) {
+                if (navigator.plugins) {
+                    for (i = 0, j = navigator.plugins.length; i < j; i++) {
+                        var plugin = navigator.plugins[i];
+                        var haystack = plugin.name + plugin.description;
+                        var found = 0;
+                        for (k = 0, l = substrs.length; k < l; k++) {
+                            if (haystack.indexOf(substrs[k]) != -1) {
+                                found++;
+                            }
+                        }
+                        if (found == substrs.length) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            that.detectObject = function (progIds, fns) {
+                for (i = 0, j = progIds.length; i < j; i++) {
+                    try {
+                        var obj = new ActiveXObject(progIds[i]);
+                        if (obj) {
+                            return fns && fns[i] ? fns[i].call(obj) : true;
+                        }
+                    } catch (e) {
+                        // Ignore
+                    }
+                }
+                return false;
+            }
+            for (var alias in plugins2detect) {
+                var plugin = plugins2detect[alias];
+                if (that.detectPlugin(plugin.substrs) || that.detectObject(plugin.progIds, plugin.fns)) {
+                    device.browserPlugins.push(alias);
+                    that.addConditionalTest(alias, true);
+                }
+            }
+        }
     }
     function init() {
         if (Modernizr !== undefined) {
@@ -300,6 +366,7 @@
                 model: '',
                 browser: '',
                 browserEngine: '',
+                browserPlugins: [],
                 browserVersion: '',
                 os: '',
                 osVersion: '',
