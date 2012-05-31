@@ -13,7 +13,6 @@
  *  - Browser selectors in CSS - http://37signals.com/svn/archives2/browser_selectors_in_css.php
  *  - Categorizr - http://www.brettjankord.com/2012/01/16/categorizr-a-modern-device-detection-script/
 */
-
 /*
  * Detecizr, which requires Modernizr, adds some tests to Modernizr.
  * It detects device, device model, screen size, operating system,
@@ -26,7 +25,10 @@
  *
  * Author         Baris Aydinoglu
  */
- ;(function (window, navigator) {
+/*jslint browser: true, regexp: true, white: true */
+/*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:true, undef:true, curly:true, browser:true, indent:4, maxerr:50, regexp:false, white:false */;
+(function (window, navigator) {
+    "use strict";
     var Modernizr = window.Modernizr,
         options = {
             // option for enabling HTML classes of all features (not only the true features) to be added
@@ -47,43 +49,46 @@
     function Detectizr(opt) {
         // Create Global 'extend' method, so Detectizr does not need jQuery.extend
         var extend = function (obj, extObj) {
+                var a, b, i;
                 if (arguments.length > 2) {
-                    for (var a = 1; a < arguments.length; a++) {
+                    for (a = 1, b = arguments.length; a < b; a += 1) {
                         extend(obj, arguments[a]);
                     }
                 } else {
-                    for (var i in extObj) {
-                        obj[i] = extObj[i];
+                    for (i in extObj) {
+                        if (extObj.hasOwnProperty(i)) {
+                            obj[i] = extObj[i];
+                        }
                     }
                 }
                 return obj;
-            };
-        var that = this,
+            },
+            that = this,
             device = Modernizr.Detectizr.device,
             deviceTypes = ['tv', 'tablet', 'mobile', 'desktop'],
             plugins2detect = {
                 java: {
-                    substrs: ["Java"],
-                    progIds: ["JavaWebStart.isInstalled"]
+                    substrs: ['Java'],
+                    progIds: ['JavaWebStart.isInstalled']
                 },
                 acrobat: {
-                    substrs: ["Adobe", "Acrobat"],
-                    progIds: ["AcroPDF.PDF", "PDF.PDFCtrl.5"]
+                    substrs: ['Adobe', 'Acrobat'],
+                    progIds: ['AcroPDF.PDF', 'PDF.PDFCtrl.5']
                 },
                 flash: {
-                    substrs: ["Shockwave", "Flash"],
-                    progIds: ["ShockwaveFlash.ShockwaveFlash"]
+                    substrs: ['Shockwave', 'Flash'],
+                    progIds: ['ShockwaveFlash.ShockwaveFlash']
                 },
                 mediaplayer: {
-                    substrs: ["Windows Media"],
-                    progIds: ["MediaPlayer.MediaPlayer"]
+                    substrs: ['Windows Media'],
+                    progIds: ['MediaPlayer.MediaPlayer']
                 },
                 silverlight: {
-                    substrs: ["Silverlight"],
-                    progIds: ["AgControl.AgControl"]
+                    substrs: ['Silverlight'],
+                    progIds: ['AgControl.AgControl']
                 }
             },
-            i, j, k, l;
+            i, j, k, l, alias, plugin;
         options = extend({}, options, opt || {});
         // simplified and localized indexOf method as one parameter fixed as useragent
         that.is = function (key) {
@@ -102,8 +107,7 @@
             if (string === null || string === undefined) {
                 return '';
             }
-            string = string + '';
-            return string.replace(/((\s|\-|\.)+[a-z0-9])/g, function ($1) {
+            return String(string).replace(/((\s|\-|\.)+[a-z0-9])/g, function ($1) {
                 return $1.toUpperCase().replace(/(\s|\-|\.)/g, '');
             });
         };
@@ -139,11 +143,11 @@
             if (that.test(/GoogleTV|SmartTV|Internet.TV|NetCast|NETTV|AppleTV|boxee|Kylo|Roku|DLNADOC|CE\-HTML/i)) {
                 // Check if user agent is a smart tv
                 device.type = deviceTypes[0];
-                device.model = "smartTv";
+                device.model = 'smartTv';
             } else if (that.test(/Xbox|PLAYSTATION.3|Wii/i)) {
                 // Check if user agent is a game console
                 device.type = deviceTypes[0];
-                device.model = "gameConsole";
+                device.model = 'gameConsole';
             } else if (that.test(/iP(a|ro)d/i)) {
                 // Check if user agent is a iPad
                 device.type = deviceTypes[1];
@@ -168,9 +172,9 @@
                 device.model = that.exec(/iphone|ipod|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec|j2me/i);
                 if (device.model !== null) {
                     device.type = deviceTypes[2];
-                    device.model = device.model + "";
+                    device.model = String(device.model);
                 } else {
-                    device.model = "";
+                    device.model = '';
                     if (that.test(/BOLT|Fennec|Iris|Maemo|Minimo|Mobi|mowser|NetFront|Novarra|Prism|RX-34|Skyfire|Tear|XV6875|XV6975|Google.Wireless.Transcoder/i)) {
                         // Check if user agent is unique Mobile User Agent
                         device.type = deviceTypes[2];
@@ -199,8 +203,7 @@
                     }
                 }
             }
-            i = deviceTypes.length;
-            while (i--) {
+            for (i = 0, j = deviceTypes.length; i < j; i += 1) {
                 that.addConditionalTest(deviceTypes[i], (device.type === deviceTypes[i]));
             }
             if (options.detectDeviceModel) {
@@ -320,40 +323,44 @@
         if (options.detectPlugins) {
             that.detectPlugin = function (substrs) {
                 if (navigator.plugins) {
-                    for (i = 0, j = navigator.plugins.length; i < j; i++) {
-                        var plugin = navigator.plugins[i];
-                        var haystack = plugin.name + plugin.description;
-                        var found = 0;
-                        for (k = 0, l = substrs.length; k < l; k++) {
-                            if (haystack.indexOf(substrs[k]) != -1) {
-                                found++;
+                    for (i = 0, j = navigator.plugins.length; i < j; i += 1) {
+                        var plugin = navigator.plugins[i],
+                            haystack = plugin.name + plugin.description,
+                            found = 0;
+                        for (k = 0, l = substrs.length; k < l; k += 1) {
+                            if (haystack.indexOf(substrs[k]) !== -1) {
+                                found += 1;
                             }
                         }
-                        if (found == substrs.length) {
+                        if (found === substrs.length) {
                             return true;
                         }
                     }
                 }
                 return false;
-            }
+            };
             that.detectObject = function (progIds, fns) {
-                for (i = 0, j = progIds.length; i < j; i++) {
-                    try {
-                        var obj = new ActiveXObject(progIds[i]);
-                        if (obj) {
-                            return fns && fns[i] ? fns[i].call(obj) : true;
+                if (window.ActiveXObject) {
+                    for (i = 0, j = progIds.length; i < j; i += 1) {
+                        try {
+                            var obj = new ActiveXObject(progIds[i]);
+                            if (obj) {
+                                return fns && fns[i] ? fns[i].call(obj) : true;
+                            }
+                        } catch (e) {
+                            // Ignore
                         }
-                    } catch (e) {
-                        // Ignore
                     }
                 }
                 return false;
-            }
-            for (var alias in plugins2detect) {
-                var plugin = plugins2detect[alias];
-                if (that.detectPlugin(plugin.substrs) || that.detectObject(plugin.progIds, plugin.fns)) {
-                    device.browserPlugins.push(alias);
-                    that.addConditionalTest(alias, true);
+            };
+            for (alias in plugins2detect) {
+                if (plugins2detect.hasOwnProperty(alias)) {
+                    plugin = plugins2detect[alias];
+                    if (that.detectPlugin(plugin.substrs) || that.detectObject(plugin.progIds, plugin.fns)) {
+                        device.browserPlugins.push(alias);
+                        that.addConditionalTest(alias, true);
+                    }
                 }
             }
         }
@@ -373,7 +380,7 @@
                 userAgent: (navigator.userAgent || navigator.vendor || window.opera).toLowerCase()
             };
             Modernizr.Detectizr.detect = function (settings) {
-                Detectizr(settings);
+                return new Detectizr(settings);
             };
         }
     }
