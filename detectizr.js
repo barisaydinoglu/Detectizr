@@ -253,7 +253,11 @@
         if (options.detectBrowser) {
             if (!that.test(/opera|webtv/i) && that.test(/msie\s(\d)/)) {
                 device.browser = 'ie';
-                device.browserVersion = (that.test(/trident\/4\.0/) ? '8' : RegExp.$1);
+                if (!window.addEventListener && document.documentMode && document.documentMode===7) {
+                    device.browserVersion = '8compat';
+                } else {
+                    device.browserVersion = (that.test(/trident\/4\.0/) ? '8' : RegExp.$1);
+                }
             } else if (that.is('firefox')) {
                 device.browserEngine = 'gecko';
                 device.browser = 'firefox';
