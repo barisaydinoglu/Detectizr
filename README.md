@@ -5,8 +5,12 @@ Detectizr is a Modernizr extension to detect
 * device
 * device model
 * screen size
-* operating system + os version
-* browser + browser version + browser engine
+* operating system
+* operating system version
+* browser
+* browser version
+* browser engine
+* browser plugins
 
 Detection of these sets are optional and can be disabled.
 
