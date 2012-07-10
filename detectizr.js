@@ -14,7 +14,7 @@
  *  - Categorizr - http://www.brettjankord.com/2012/01/16/categorizr-a-modern-device-detection-script/
  */
 /*
- * Detecizr, which requires Modernizr, adds some tests to Modernizr.
+ * Detectizr, which requires Modernizr, adds some tests to Modernizr.
  * It detects device, device model, screen size, operating system,
  * and browser details.
  * Detection of these sets are optional and can be disabled.
