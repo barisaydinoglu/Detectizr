@@ -1,5 +1,5 @@
 /*!
- * Detectizr v1.2
+ * Detectizr v1.3
  * http://barisaydinoglu.github.com/Detectizr/
  * https://github.com/barisaydinoglu/Detectizr
  * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright © 2012
@@ -25,10 +25,11 @@
  *
  * Author         Baris Aydinoglu
  */
-/*jslint browser: true, regexp: true, white: true */
-/*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:true, undef:true, curly:true, browser:true, indent:4, maxerr:50, regexp:false, white:false */;
+/*
+ * jslint browser: true, regexp: true, sloppy: true, white: true
+ * jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:true, undef:true, curly:true, browser:true, indent:4, maxerr:50, regexp:false, white:false
+ */;
 (function (window, navigator) {
-    "use strict";
     var Modernizr = window.Modernizr,
         options = {
             // option for enabling HTML classes of all features (not only the true features) to be added
@@ -46,7 +47,8 @@
             // option for enabling detection of common browser plugins
             detectPlugins: true
         };
-    function Detectizr(opt) {
+
+	function Detectizr(opt) {
         // Create Global 'extend' method, so Detectizr does not need jQuery.extend
         var extend = function (obj, extObj) {
                 var a, b, i;
@@ -65,6 +67,7 @@
             },
             that = this,
             device = Modernizr.Detectizr.device,
+            docElement = document.documentElement,
             deviceTypes = ['tv', 'tablet', 'mobile', 'desktop'],
             plugins2detect = {
                 java: {
@@ -88,7 +91,7 @@
                     progIds: ['AgControl.AgControl']
                 }
             },
-            i, j, k, l, alias, plugin;
+            i, j, k, l, alias, plugin, re;
         options = extend({}, options, opt || {});
         // simplified and localized indexOf method as one parameter fixed as useragent
         that.is = function (key) {
@@ -134,6 +137,10 @@
                 test = typeof test === 'function' ? test() : test;
                 if (test) {
                     Modernizr.addTest(feature, true);
+                } else {
+                    delete Modernizr[feature];
+                    re = new RegExp("\\b" + feature + "\\b");
+                    docElement.className = docElement.className.replace(re, '');
                 }
             }
         };
@@ -365,6 +372,7 @@
             }
         }
     }
+
     function init() {
         if (Modernizr !== undefined) {
             Modernizr.Detectizr = Modernizr.Detectizr || {};
