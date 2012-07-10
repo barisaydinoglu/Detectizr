@@ -4,7 +4,6 @@ Detectizr
 Detectizr is a Modernizr extension to detect
 * device
 * device model
-* device orientation
 * screen size
 * operating system
 * operating system version
