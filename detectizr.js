@@ -1,5 +1,5 @@
 /*!
- * Detectizr v1.3
+ * Detectizr v1.4
  * http://barisaydinoglu.github.com/Detectizr/
  * https://github.com/barisaydinoglu/Detectizr
  * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright © 2012
@@ -12,7 +12,7 @@
  * Inspirations:
  *  - Browser selectors in CSS - http://37signals.com/svn/archives2/browser_selectors_in_css.php
  *  - Categorizr - http://www.brettjankord.com/2012/01/16/categorizr-a-modern-device-detection-script/
-*/
+ */
 /*
  * Detecizr, which requires Modernizr, adds some tests to Modernizr.
  * It detects device, device model, screen size, operating system,
@@ -48,7 +48,7 @@
             detectPlugins: true
         };
 
-	function Detectizr(opt) {
+    function Detectizr(opt) {
         // Create Global 'extend' method, so Detectizr does not need jQuery.extend
         var extend = function (obj, extObj) {
                 var a, b, i;
@@ -91,7 +91,7 @@
                     progIds: ['AgControl.AgControl']
                 }
             },
-            i, j, k, l, alias, plugin, re;
+            i, j, k, l, alias, plugin, resizeTimeoutId, re, oldOrientation;
         options = extend({}, options, opt || {});
         // simplified and localized indexOf method as one parameter fixed as useragent
         that.is = function (key) {
@@ -126,6 +126,24 @@
                 }
             }
         };
+        that.checkOrientation = function () {
+            //timeout wrapper points with doResizeCode as callback
+            window.clearTimeout(resizeTimeoutId);
+            resizeTimeoutId = window.setTimeout(function () {
+                oldOrientation = device.orientation;
+                //wrapper for height/width check
+                if (window.innerHeight > window.innerWidth) {
+                    device.orientation = "portrait";
+                } else {
+                    device.orientation = "landscape";
+                }
+                that.addConditionalTest(device.orientation, true);
+                if (oldOrientation !== device.orientation) {
+                    that.addConditionalTest(oldOrientation, false);
+                }
+            }, 10);
+        };
+
         // add test to Modernizr based on a conditi
         that.addConditionalTest = function (feature, test) {
             if (feature === null || feature === undefined || feature === '') {
@@ -216,6 +234,12 @@
             if (options.detectDeviceModel) {
                 that.addConditionalTest(that.toCamel(device.model), true);
             }
+            if (device.type === deviceTypes[1] || device.type === deviceTypes[2]) {
+                window.onresize = function (event) {
+                    that.checkOrientation(event);
+                };
+                that.checkOrientation();
+            }
         }
 
         /** Screen detection **/
@@ -287,7 +311,7 @@
         if (options.detectBrowser) {
             if (!that.test(/opera|webtv/i) && that.test(/msie\s(\d)/)) {
                 device.browser = 'ie';
-                if (!window.addEventListener && document.documentMode && document.documentMode===7) {
+                if (!window.addEventListener && document.documentMode && document.documentMode === 7) {
                     device.browserVersion = '8compat';
                 } else {
                     device.browserVersion = (that.test(/trident\/4\.0/) ? '8' : RegExp.$1);
@@ -379,6 +403,7 @@
             Modernizr.Detectizr.device = {
                 type: '',
                 model: '',
+                orientation: '',
                 browser: '',
                 browserEngine: '',
                 browserPlugins: [],
