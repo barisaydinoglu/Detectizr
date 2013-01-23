@@ -265,7 +265,7 @@
                     device.os = 'windows';
                     if (that.is('windows nt 6.2')) {
                         device.osVersion = '8';
-                    } else if (that.is('windows nt 6.0')) {
+                    } else if (that.is('windows nt 6.1')) {
                         device.osVersion = '7';
                     } else if (that.is('windows nt 6.0')) {
                         device.osVersion = 'vista';
