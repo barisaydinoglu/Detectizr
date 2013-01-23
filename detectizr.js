@@ -1,5 +1,5 @@
 /*!
- * Detectizr v1.4.2
+ * Detectizr v1.4.3
  * http://barisaydinoglu.github.com/Detectizr/
  * https://github.com/barisaydinoglu/Detectizr
  * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright © 2012
@@ -243,7 +243,7 @@
         }
 
         /** Screen detection **/
-        if (options.detectScreen) {
+        if (options.detectScreen && !!Modernizr.mq) {
             that.addConditionalTest('smallScreen', Modernizr.mq('only screen and (max-width: 480px)'));
             that.addConditionalTest('verySmallScreen', Modernizr.mq('only screen and (max-width: 320px)'));
             that.addConditionalTest('veryVerySmallScreen', Modernizr.mq('only screen and (max-width: 240px)'));
