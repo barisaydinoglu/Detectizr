@@ -1,5 +1,5 @@
 /*!
- * Detectizr v1.4
+ * Detectizr v1.4.1
  * http://barisaydinoglu.github.com/Detectizr/
  * https://github.com/barisaydinoglu/Detectizr
  * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright © 2012
@@ -263,7 +263,9 @@
             if (device.os === '') {
                 if (that.is('win') || that.is('16bit')) {
                     device.os = 'windows';
-                    if (that.is('windows nt 6.1')) {
+                    if (that.is('windows nt 6.2')) {
+                        device.osVersion = '8';
+                    } else if (that.is('windows nt 6.0')) {
                         device.osVersion = '7';
                     } else if (that.is('windows nt 6.0')) {
                         device.osVersion = 'vista';
