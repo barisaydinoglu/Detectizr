@@ -1,5 +1,5 @@
 /*!
- * Detectizr v1.4.1
+ * Detectizr v1.4.2
  * http://barisaydinoglu.github.com/Detectizr/
  * https://github.com/barisaydinoglu/Detectizr
  * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright © 2012
@@ -311,7 +311,7 @@
 
         /** Browser detection **/
         if (options.detectBrowser) {
-            if (!that.test(/opera|webtv/i) && that.test(/msie\s(\d)/)) {
+            if (!that.test(/opera|webtv/i) && that.test(/msie\s([0-9]{1,})/)) {
                 device.browser = 'ie';
                 if (!window.addEventListener && document.documentMode && document.documentMode === 7) {
                     device.browserVersion = '8compat';
