@@ -180,6 +180,7 @@
             } else if ((that.test(/tablet/i) && !that.test(/RX-34/i)) || that.test(/FOLIO/i)) {
                 // Check if user agent is a Tablet
                 device.type = deviceTypes[1];
+                device.model = String(that.exec(/playbook/));
             } else if (that.test(/Linux/i) && that.test(/Android/i) && !that.test(/Fennec|mobi|HTC.Magic|HTCX06HT|Nexus.One|SC-02B|fone.945/i)) {
                 // Check if user agent is an Android Tablet
                 device.type = deviceTypes[1];
@@ -192,6 +193,10 @@
                 // Check if user agent is a pre Android 3.0 Tablet
                 device.type = deviceTypes[1];
                 device.model = 'android';
+            } else if (that.test(/BB10/i)) {
+                // Check if user agent is a BB10 device
+                device.type = deviceTypes[1];
+                device.model = 'blackberry';
             } else {
                 // Check if user agent is one of common mobile types
                 device.model = that.exec(/iphone|ipod|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec|j2me/i);
@@ -206,8 +211,8 @@
                     } else if (that.test(/Opera/i) && that.test(/Windows.NT.5/i) && that.test(/HTC|Xda|Mini|Vario|SAMSUNG\-GT\-i8000|SAMSUNG\-SGH\-i9/i)) {
                         // Check if user agent is an odd Opera User Agent - http://goo.gl/nK90K
                         device.type = deviceTypes[2];
-                    } else if ((that.test(/Windows.(NT|XP|ME|9)/i) && !that.test(/Phone/i)) || that.test(/Win(9|.9|NT)/i)) {
-                        // Check if user agent is Windows Desktop
+                    } else if ((that.test(/Windows.(NT|XP|ME|9)/i) && !that.test(/Phone/i)) || that.test(/Win(9|.9|NT)/i) || that.test(/\(Windows 8\)/i)) {
+                        // Check if user agent is Windows Desktop, "(Windows 8)" Chrome extra exception
                         device.type = deviceTypes[3];
                     } else if (that.test(/Macintosh|PowerPC/i) && !that.test(/Silk/i)) {
                         // Check if agent is Mac Desktop
@@ -258,12 +263,18 @@
                 } else if (device.model === 'android') {
                     device.osVersion = (that.test(/os\s(\d+)_/) ? RegExp.$1 : '').substr(0, 2);
                     device.os = 'android';
+                } else if (device.model === 'blackberry') {
+                    device.osVersion = (that.test(/blackberry (\d+)/) ? RegExp.$1 : '');
+                    device.os = 'blackberry';
+                } else if (device.model === 'playbook') {
+                    device.osVersion = (that.test(/os ([^\s]+)/) ? RegExp.$1.replace(';', '') : '');
+                    device.os = 'blackberry';
                 }
             }
             if (device.os === '') {
                 if (that.is('win') || that.is('16bit')) {
                     device.os = 'windows';
-                    if (that.is('windows nt 6.2')) {
+                    if (that.is('windows nt 6.2') || that.test(/\(windows 8\)/)) { //windows 8 chrome mac fix
                         device.osVersion = '8';
                     } else if (that.is('windows nt 6.1')) {
                         device.osVersion = '7';
