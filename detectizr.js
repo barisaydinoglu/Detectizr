@@ -258,13 +258,15 @@
         if (options.detectOS) {
             if (device.model !== '') {
                 if (device.model === 'ipad' || device.model === 'iphone' || device.model === 'ipod') {
-                    device.osVersion = (that.test(/os\s(\d+)_/) ? RegExp.$1 : '');
+                    device.osVersion = (that.test(/os ([^\s]+)/) ? RegExp.$1.replace(/_/g,'.') : '');
                     device.os = 'ios';
                 } else if (device.model === 'android') {
                     device.osVersion = (that.test(/os\s(\d+)_/) ? RegExp.$1 : '').substr(0, 2);
+                    if (!device.osVersion)
+                        device.osVersion = (that.test(/android ([^\s]+)/) ? RegExp.$1.replace(';', '') : '');
                     device.os = 'android';
                 } else if (device.model === 'blackberry') {
-                    device.osVersion = (that.test(/blackberry (\d+)/) ? RegExp.$1 : '');
+                    device.osVersion = (that.test(/version\/([^\s]+)/) ? RegExp.$1 : '');
                     device.os = 'blackberry';
                 } else if (device.model === 'playbook') {
                     device.osVersion = (that.test(/os ([^\s]+)/) ? RegExp.$1.replace(';', '') : '');
