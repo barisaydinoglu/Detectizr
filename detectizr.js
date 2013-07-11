@@ -1,5 +1,5 @@
 /*!
- * Detectizr v1.4.3
+ * Detectizr v1.4.4
  * http://barisaydinoglu.github.com/Detectizr/
  * https://github.com/barisaydinoglu/Detectizr
  * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright © 2012
@@ -311,10 +311,12 @@
 
         /** Browser detection **/
         if (options.detectBrowser) {
-            if (!that.test(/opera|webtv/i) && that.test(/msie\s([0-9]{1,})/)) {
+            if (!that.test(/opera|webtv/i) && (that.test(/msie\s([0-9]{1,})/) || that.is('trident'))) {
                 device.browser = 'ie';
                 if (!window.addEventListener && document.documentMode && document.documentMode === 7) {
                     device.browserVersion = '8compat';
+                } else if (that.test(/trident.*rv[ :](\d+)\./)) {
+                    device.browserVersion = RegExp.$1;
                 } else {
                     device.browserVersion = (that.test(/trident\/4\.0/) ? '8' : RegExp.$1);
                 }
