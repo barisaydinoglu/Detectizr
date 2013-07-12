@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <script src="modernizr.js"></script>
@@ -7,7 +8,10 @@
   <body>
     <script>
       Modernizr.Detectizr.detect({detectScreen:false});
+      debug.log("Modernizr.Detectizr.device properties");
       debug.log(Modernizr.Detectizr.device);
+      debug.log("Modernizr.Detectizr.device properties stringified");
+      debug.log(JSON.stringify(Modernizr.Detectizr.device));
     </script>
   </body>
 </html>
