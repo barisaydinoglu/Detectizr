@@ -1,11 +1,13 @@
 <html>
-	<head>
-	  <script src="modernizr.js"></script>
-	  <script src="../detectizr.js"></script>
-	</head>
-	<body>
-	  <script>
-		Modernizr.Detectizr.detect({detectScreen:false});
-	  </script>
-	</body>
+  <head>
+    <script src="modernizr.js"></script>
+    <script src="ba-debug.js"></script>
+    <script src="../detectizr.js"></script>
+  </head>
+  <body>
+    <script>
+      Modernizr.Detectizr.detect({detectScreen:false});
+      debug.log(Modernizr.Detectizr.device);
+    </script>
+  </body>
 </html>
