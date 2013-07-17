@@ -259,7 +259,11 @@
         if (options.detectOS) {
             if (device.model !== '') {
                 if (device.model === 'ipad' || device.model === 'iphone' || device.model === 'ipod') {
-                    device.osVersion = (that.test(/os ([^\s]+)/) ? RegExp.$1.replace(/_/g,'.') : '');
+                    device.osVersion = (that.test(/os\s(\d+)_/) ? RegExp.$1 : '');
+
+                    // Full version check
+                    device.osVersionFull = (that.test(/os ([^\s]+)/) ? RegExp.$1.replace(/_/g,'.') : '');
+
                     device.os = 'ios';
                 } else if (device.model === 'android') {
                     device.osVersion = (that.test(/os\s(\d+)_/) ? RegExp.$1 : '').substr(0, 2);
@@ -319,9 +323,15 @@
                 }
             }
             if (device.os !== '') {
+                // assign the full version property if not ios (special case. see above ios check)
+                if (device.os !== 'ios') {
+                    device.osVersionFull = device.osVersion;
+                }
                 that.addConditionalTest(device.os, true);
+                that.addConditionalTest(device.osVersionFull, true);
                 that.addVersionTest(device.os, device.osVersion);
             }
+
         }
 
         /** Browser detection **/
@@ -427,6 +437,7 @@
                 browserVersion: '',
                 os: '',
                 osVersion: '',
+                osVersionFull: '',
                 userAgent: (navigator.userAgent || navigator.vendor || window.opera).toLowerCase()
             };
             Modernizr.Detectizr.detect = function (settings) {
