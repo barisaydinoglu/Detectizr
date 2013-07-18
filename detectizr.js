@@ -267,6 +267,7 @@
                     device.osVersion = (that.test(/os\s(\d+)_/) ? RegExp.$1 : '').substr(0, 2);
                     if (!device.osVersion) {
                         device.osVersion = (that.test(/android\s(\d+)\./) ? RegExp.$1 : '');
+                        device.osVersionFull = (that.test(/android ([^\s]+)/) ? RegExp.$1.replace(/_/g,'.') : '');
                     }
                     device.os = 'android';
                 } else if (device.model === 'blackberry') {
@@ -322,12 +323,11 @@
             }
             if (device.os !== '') {
                 // assign the full version property if not ios (special case. see above ios check)
-                if (device.os !== 'ios') {
+                if (device.os !== 'ios' && device.os !== 'android') {
                     device.osVersionFull = device.osVersion;
                 }
                 that.addConditionalTest(device.os, true);
-                that.addVersionTest(device.os, device.osVersionFull.replace('.', '_'));
-                // that.addConditionalTest(device.osVersionFull, true);
+                that.addVersionTest(device.os, device.osVersionFull.replace(/\./g, '_'));
                 that.addVersionTest(device.os, device.osVersion);
             }
 
