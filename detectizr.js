@@ -260,11 +260,9 @@
             if (device.model !== '') {
                 if (device.model === 'ipad' || device.model === 'iphone' || device.model === 'ipod') {
                     device.osVersion = (that.test(/os\s(\d+)_/) ? RegExp.$1 : '');
-
+                    device.os = 'ios';
                     // Full version check
                     device.osVersionFull = (that.test(/os ([^\s]+)/) ? RegExp.$1.replace(/_/g,'.') : '');
-
-                    device.os = 'ios';
                 } else if (device.model === 'android') {
                     device.osVersion = (that.test(/os\s(\d+)_/) ? RegExp.$1 : '').substr(0, 2);
                     if (!device.osVersion) {
@@ -328,7 +326,8 @@
                     device.osVersionFull = device.osVersion;
                 }
                 that.addConditionalTest(device.os, true);
-                that.addConditionalTest(device.osVersionFull, true);
+                that.addVersionTest(device.os, device.osVersionFull.replace('.', '_'));
+                // that.addConditionalTest(device.osVersionFull, true);
                 that.addVersionTest(device.os, device.osVersion);
             }
 
