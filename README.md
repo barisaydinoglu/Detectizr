@@ -8,6 +8,7 @@ Detectizr is a Modernizr extension to detect
 * screen size
 * operating system
 * operating system version
+* operating system version full
 * browser
 * browser version
 * browser engine
