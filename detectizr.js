@@ -352,6 +352,7 @@
                 device.browserEngine = 'gecko';
             } else if (that.is('opera')) {
                 device.browser = 'opera';
+                device.browserEngine = 'presto';
                 device.browserVersion = (that.test(/version\/(\d+)/) ? RegExp.$1 : (that.test(/opera(\s|\/)(\d+)/) ? RegExp.$2 : ''));
             } else if (that.is('konqueror')) {
                 device.browser = 'konqueror';
