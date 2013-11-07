@@ -1,5 +1,5 @@
 /*!
- * Detectizr v1.4.4
+ * Detectizr v1.4.5
  * http://barisaydinoglu.github.com/Detectizr/
  * https://github.com/barisaydinoglu/Detectizr
  * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright © 2012
@@ -281,7 +281,10 @@
             if (device.os === '') {
                 if (that.is('win') || that.is('16bit')) {
                     device.os = 'windows';
-                    if (that.is('windows nt 6.2') || that.test(/\(windows 8\)/)) { //windows 8 chrome mac fix
+                    if (that.is('windows nt 6.3')) {
+                        device.osVersion = '8';
+                        device.osVersionFull = '8.1';
+					} else if (that.is('windows nt 6.2') || that.test(/\(windows 8\)/)) { //windows 8 chrome mac fix
                         device.osVersion = '8';
                     } else if (that.is('windows nt 6.1')) {
                         device.osVersion = '7';
@@ -323,7 +326,7 @@
             }
             if (device.os !== '') {
                 // assign the full version property if not ios (special case. see above ios check)
-                if (device.os !== 'ios' && device.os !== 'android') {
+                if (!device.osVersionFull && !!device.osVersion) {
                     device.osVersionFull = device.osVersion;
                 }
                 that.addConditionalTest(device.os, true);
