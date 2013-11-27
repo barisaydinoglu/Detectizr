@@ -1,13 +1,37 @@
 {
-  "name": "Detectizr",
+  "name": "detectizr",
   "version": "1.4.5",
-  "main": "detectizr.js",
+  "title": "Detectizr",
+  "description": "Detectizr is a Modernizr extension to detect device, browser, operating system and screen.",
+  "keywords": [
+    "detect",
+    "determine",
+    "browser",
+    "device",
+    "mobile",
+    "desktop",
+    "tablet",
+    "os",
+    "modernizr",
+    "javascript",
+    "js"
+  ],
+  "homepage": "https://github.com/barisaydinoglu/Detectizr",
+  "author": {
+    "name": "Baris Aydinoglu",
+    "url": "http://baris.aydinoglu.info"
+  }.
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/barisaydinoglu/Detectizr.git"
+  },
+  "bugs": "https://github.com/barisaydinoglu/Detectizr/issues",
   "dependencies": {
     "modernizr": "2.6.2"
-  }
+  },
+  "main": "detectizr.js",
   "ignore": [
     "test",
     "README.md"
-  ],
-  "bugs": "https://github.com/barisaydinoglu/Detectizr/issues"
+  ]
 }
