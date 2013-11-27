@@ -2,8 +2,12 @@
   "name": "Detectizr",
   "version": "1.4.5",
   "main": "detectizr.js",
+  "dependencies": {
+    "modernizr": "2.6.2"
+  }
   "ignore": [
     "test",
     "README.md"
-  ]
+  ],
+  "bugs": "https://github.com/barisaydinoglu/Detectizr/issues"
 }
