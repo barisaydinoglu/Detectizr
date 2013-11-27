@@ -1,0 +1,9 @@
+{
+  "name": "Detectizr",
+  "version": "1.4.5",
+  "main": "detectizr.js",
+  "ignore": [
+    "test",
+    "README.md"
+  ]
+}
