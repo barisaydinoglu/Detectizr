@@ -1,0 +1,6 @@
+.jshintignore
+.jshintrc
+
+/build
+/test
+/Gruntfile.js
