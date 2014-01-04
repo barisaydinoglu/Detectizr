@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="modernizr.js"></script>
-    <script src="ba-debug.js"></script>
-    <script src="../detectizr.js"></script>
-  </head>
-  <body>
-    <script>
-      Modernizr.Detectizr.detect({detectScreen:false});
-      debug.log("Modernizr.Detectizr.device properties");
-      debug.log(Modernizr.Detectizr.device);
-      debug.log("Modernizr.Detectizr.device properties stringified");
-      debug.log(JSON.stringify(Modernizr.Detectizr.device));
-    </script>
-  </body>
+	<head>
+		<meta charset="utf-8">
+		<title>Detectizr Test Suite</title>
+		<!-- Load local QUnit. -->
+		<link rel="stylesheet" href="libs/qunit.css" media="screen">
+		<script src="libs/modernizr.js"></script>
+		<script src="libs/qunit.js"></script>
+		<script src="../src/detectizr.js"></script>
+	</head>
+	<body>
+		<div id="qunit"></div>
+		<script src="tests.js"></script>
+	</body>
 </html>
