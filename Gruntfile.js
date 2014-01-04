@@ -91,6 +91,9 @@ module.exports = function (grunt) {
     // Load grunt tasks from NPM packages
     require("load-grunt-tasks")(grunt);
 
+    // Integrate jQuery specific tasks
+    grunt.loadTasks( "build/tasks" );
+
     // Short list as a high frequency watch task
     grunt.registerTask("dev", ["jshint"]);
 

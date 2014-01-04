@@ -362,6 +362,7 @@
         /** Browser detection **/
         if (options.detectBrowser) {
             if (!that.test(/opera|webtv/i) && (that.test(/msie\s([0-9]{1,})/) || that.is("trident"))) {
+                device.browserEngine = "trident";
                 device.browser = "ie";
                 if (!window.addEventListener && document.documentMode && document.documentMode === 7) {
                     device.browserVersion = "8compat";

@@ -19,8 +19,8 @@
  * It detects device, device model, screen size, operating system,
  * and browser details.
  * Detection of these sets are optional and can be disabled.
- *
- * Detectable device types are: tv (includes smart tv and game console),
+ * 
+ * Detectable device types are: tv (includes smart tv and game console), 
  * mobile, tablet, and desktop. Device models of tv, mobile and tablet
  * are being detected.
  *
@@ -362,6 +362,7 @@
         /** Browser detection **/
         if (options.detectBrowser) {
             if (!that.test(/opera|webtv/i) && (that.test(/msie\s([0-9]{1,})/) || that.is("trident"))) {
+                device.browserEngine = "trident";
                 device.browser = "ie";
                 if (!window.addEventListener && document.documentMode && document.documentMode === 7) {
                     device.browserVersion = "8compat";
