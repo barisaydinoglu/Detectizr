@@ -72,21 +72,17 @@
             deviceTypes = ["tv", "tablet", "mobile", "desktop"],
             rclass = /[\t\r\n]/g,
             plugins2detect = {
-                java: {
-                    substrs: ["Java"],
-                    progIds: ["JavaWebStart.isInstalled"]
-                },
                 acrobat: {
                     substrs: ["Adobe", "Acrobat"],
                     progIds: ["AcroPDF.PDF", "PDF.PDFCtrl.5"]
                 },
                 flash: {
                     substrs: ["Shockwave", "Flash"],
-                    progIds: ["ShockwaveFlash.ShockwaveFlash"]
+                    progIds: ["ShockwaveFlash.ShockwaveFlash.1"]
                 },
                 mediaplayer: {
                     substrs: ["Windows Media"],
-                    progIds: ["MediaPlayer.MediaPlayer"]
+                    progIds: ["wmplayer.ocx"]
                 },
                 silverlight: {
                     substrs: ["Silverlight"],
@@ -409,46 +405,58 @@
         /** Plugin detection **/
         if (options.detectPlugins) {
             that.detectPlugin = function (substrs) {
-                if (navigator.plugins) {
-                    for (i = 0, j = navigator.plugins.length; i < j; i += 1) {
-                        var plugin = navigator.plugins[i],
-                            haystack = plugin.name + plugin.description,
-                            found = 0;
-                        for (k = 0, l = substrs.length; k < l; k += 1) {
-                            if (haystack.indexOf(substrs[k]) !== -1) {
-                                found += 1;
-                            }
+                for (i = 0, j = navigator.plugins.length; i < j; i++) {
+                    var plugin = navigator.plugins[i],
+                        haystack = plugin.name + plugin.description,
+                        found = 0;
+                    for (k = 0, l = substrs.length; k < l; k += 1) {
+                        if (haystack.indexOf(substrs[k]) !== -1) {
+                            found += 1;
                         }
-                        if (found === substrs.length) {
-                            return true;
-                        }
+                    }
+                    if (found === substrs.length) {
+                        return true;
                     }
                 }
                 return false;
             };
             that.detectObject = function (progIds, fns) {
-                if (window.ActiveXObject) {
-                    for (i = 0, j = progIds.length; i < j; i += 1) {
-                        try {
-                            var obj = new ActiveXObject(progIds[i]);
-                            if (obj) {
-                                return fns && fns[i] ? fns[i].call(obj) : true;
-                            }
-                        } catch (e) {
-                            // Ignore
+                for (i = 0, j = progIds.length; i < j; i++) {
+                    try {
+                        var obj = new ActiveXObject(progIds[i]);
+                        if (obj) {
+                            return fns && fns[i] ? fns[i].call(obj) : true;
                         }
+                    } catch (e) {
+                        // Ignore
                     }
                 }
                 return false;
             };
-            for (alias in plugins2detect) {
-                if (plugins2detect.hasOwnProperty(alias)) {
-                    plugin = plugins2detect[alias];
-                    if (that.detectPlugin(plugin.substrs) || that.detectObject(plugin.progIds, plugin.fns)) {
-                        device.browserPlugins.push(alias);
-                        that.addConditionalTest(alias, true);
+            if (window.ActiveXObject) {
+                for (alias in plugins2detect) {
+                    if (plugins2detect.hasOwnProperty(alias)) {
+                        plugin = plugins2detect[alias];
+                        if (that.detectObject(plugin.progIds, plugin.fns)) {
+                            device.browserPlugins.push(alias);
+                            that.addConditionalTest(alias, true);
+                        }
                     }
                 }
+            } else if (navigator.plugins) {
+                for (alias in plugins2detect) {
+                    if (plugins2detect.hasOwnProperty(alias)) {
+                        plugin = plugins2detect[alias];
+                        if (that.detectPlugin(plugin.substrs)) {
+                            device.browserPlugins.push(alias);
+                            that.addConditionalTest(alias, true);
+                        }
+                    }
+                }
+            }
+            if (navigator.javaEnabled()) {
+                device.browserPlugins.push("java");
+                that.addConditionalTest("java", true);
             }
         }
     }
