@@ -204,7 +204,7 @@
             } else if ((that.test(/tablet/i) && !that.test(/RX-34/i)) || that.test(/FOLIO/i)) {
                 // Check if user agent is a Tablet
                 device.type = deviceTypes[1];
-                device.model = String(that.exec(/playbook/));
+                device.model = String(that.exec(/playbook/) || "");
             } else if (that.test(/Linux/i) && that.test(/Android/i) && !that.test(/Fennec|mobi|HTC.Magic|HTCX06HT|Nexus.One|SC-02B|fone.945/i)) {
                 // Check if user agent is an Android Tablet
                 device.type = deviceTypes[1];
