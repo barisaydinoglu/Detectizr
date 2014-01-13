@@ -1,4 +1,7 @@
-#Detectizr [![Build Status](https://secure.travis-ci.org/barisaydinoglu/Detectizr.png?branch=master)](https://travis-ci.org/barisaydinoglu/Detectizr)
+#Detectizr
+[![Build Status](https://secure.travis-ci.org/barisaydinoglu/Detectizr.png?branch=master)](https://travis-ci.org/barisaydinoglu/Detectizr)
+[![Stories in Ready](https://badge.waffle.io/barisaydinoglu/detectizr.png?label=ready)](https://waffle.io/barisaydinoglu/detectizr)
+
 
 Detectizr is a Modernizr extension to detect
 * device
