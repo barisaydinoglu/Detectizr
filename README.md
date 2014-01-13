@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/barisaydinoglu/detectizr.png?label=ready)](https://waffle.io/barisaydinoglu/detectizr)
 #Detectizr [![Build Status](https://secure.travis-ci.org/barisaydinoglu/Detectizr.png?branch=master)](https://travis-ci.org/barisaydinoglu/Detectizr)
 
 Detectizr is a Modernizr extension to detect
