@@ -303,7 +303,7 @@
                     if (that.is("windows nt 6.3")) {
                         device.osVersion = "8";
                         device.osVersionFull = "8.1";
-                    } else if (that.is("windows nt 6.2") || that.test(/\(windows 8\)/)) { //windows 8 chrome mac fix
+					} else if (that.is("windows nt 6.2") || that.test(/\(windows 8\)/)) { //windows 8 chrome mac fix
                         device.osVersion = "8";
                     } else if (that.is("windows nt 6.1")) {
                         device.osVersion = "7";
