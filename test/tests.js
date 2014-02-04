@@ -10,6 +10,12 @@ var userAgentsToTest = [{
 	bv: '4',
 	os: 'android',
 	osv: '4'
+}, {
+	ua: 'Mozilla/5.0 (iPhone; CPU iPhone OS 7_0_4 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) CriOS/31.0.1650.18 Mobile/11B554a Safari/8536.25 (3AE36537-DD6D-42A2-ACA6-7F76E297E70F)',
+	b: 'chrome',
+	bv: '31',
+	os: 'ios',
+	osv: '7'
 }];
 
 function isUserAgentTestOk(userAgentToTest) {

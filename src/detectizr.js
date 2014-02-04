@@ -386,6 +386,10 @@
             } else if (that.is("iron")) {
                 device.browserEngine = "webkit";
                 device.browser = "iron";
+            } else if (that.is("crios")) {
+                device.browser = "chrome";
+                device.browserEngine = "webkit";
+                device.browserVersion = (that.test(/crios\/(\d+)/) ? RegExp.$1 : "");
             } else if (that.is("applewebkit/")) {
                 device.browser = "safari";
                 device.browserEngine = "webkit";
