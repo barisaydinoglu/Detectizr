@@ -16,14 +16,6 @@ module.exports = function (grunt) {
     // But our modules can
     delete srcHintOptions.onevar;
 
-    function createBanner() {
-        return "/*! <%= pkg.title %> - v<%= pkg.version %> - " +
-            "<%= grunt.template.today('isoDate') %>\n" +
-            "<%= pkg.homepage ? '* ' + pkg.homepage + '\\n' : '' %>" +
-            "* Copyright <%= grunt.template.today('yyyy') %> <%= pkg.author.name %>;" +
-            " Licensed <%= _.pluck(pkg.licenses, 'type').join(', ') %> */\n";
-    }
-
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
         dst: readOptionalJSON("dist/.destination.json"),
@@ -60,6 +52,15 @@ module.exports = function (grunt) {
                 options: srcHintOptions
             }
         },
+        concat: {
+            options: {
+                separator: ";"
+            },
+            dist: {
+                src: ["src/**/*.js"],
+                dest: "dist/<%= pkg.name %>.js"
+            }
+        },
         watch: {
             files: [ "<%= jshint.all.src %>" ],
             tasks: "dev"
@@ -77,7 +78,11 @@ module.exports = function (grunt) {
                     beautify: {
                         ascii_only: true
                     },
-                    banner: createBanner(),
+                    banner: "/*! <%= pkg.title %> - v<%= pkg.version %> - " +
+                        "<%= grunt.template.today('isoDate') %>\n" +
+                        "<%= pkg.homepage ? '* ' + pkg.homepage + '\\n' : '' %>" +
+                        "* Copyright <%= grunt.template.today('yyyy') %> <%= pkg.author.name %>" +
+                        " Licensed <%= _.pluck(pkg.licenses, 'type').join(', ') %> */\n",
                     compress: {
                         hoist_funs: false,
                         loops: false,
@@ -85,6 +90,9 @@ module.exports = function (grunt) {
                     }
                 }
             }
+        },
+        qunit: {
+            files: ["test/**/*.html"]
         }
     });
 
@@ -92,11 +100,14 @@ module.exports = function (grunt) {
     require("load-grunt-tasks")(grunt);
 
     // Integrate jQuery specific tasks
-    grunt.loadTasks( "build/tasks" );
+    grunt.loadTasks("build/tasks");
 
     // Short list as a high frequency watch task
     grunt.registerTask("dev", ["jshint"]);
 
+    // this would be run by typing "grunt test" on the command line
+    grunt.registerTask("test", ["jshint", "qunit"]);
+
     // Default grunt
-    grunt.registerTask("default", [ "jsonlint", "dev", "uglify", "compare_size"]);
+    grunt.registerTask("default", [ "jshint", "jsonlint", "concat", "uglify", "compare_size"]);
 };
