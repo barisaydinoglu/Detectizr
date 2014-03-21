@@ -1,113 +1,119 @@
-module.exports = function (grunt) {
-    "use strict";
+module.exports = function(grunt) {
+	"use strict";
 
-    function readOptionalJSON(filepath) {
-        var data = {};
-        try {
-            data = grunt.file.readJSON(filepath);
-        } catch (e) {}
-        return data;
-    }
+	var gzip = require("gzip-js");
 
-    var gzip = require( "gzip-js" ),
-        srcHintOptions = readOptionalJSON("src/.jshintrc");
+	grunt.initConfig({
+		pkg: grunt.file.readJSON("package.json"),
+		bowercopy: {
+			options: {
+				clean: true
+			},
+			tests: {
+				files: {
+					"test/libs/qunit.js": "qunit/qunit/qunit.js",
+					"test/libs/qunit.css": "qunit/qunit/qunit.css",
+					"test/libs/require.js": "requirejs/require.js",
+					"test/libs/modernizr.js": "modernizr/modernizr.js"
+				}
+			}
+		},
+		compare_size: {
+			files: [ "dist/<%= pkg.name %>.js", "dist/<%= pkg.name %>.min.js" ],
+			options: {
+				compress: {
+					gz: function(contents) {
+						return gzip.zip(contents, {}).length;
+					}
+				},
+				cache: "dist/.sizecache.json"
+			}
+		},
+		compile: {
+			all: {
+				dest: "dist/<%= pkg.name %>.js",
+				src: "src/<%= pkg.name %>.js"
+			}
+		},
+		coveralls: {
+			options: {
+				force: true
+			},
+			all: {
+				// LCOV coverage file relevant to every target
+				src: "_tests/reports/lcov/lcov.info"
+			}
+		},
+		jscs: {
+			src: "src/**/*.js",
+			gruntfile: "Gruntfile.js",
+			tasks: "build/tasks/*.js",
+			options: {
+				config: ".jscs.json"
+			}
+		},
+		jshint: {
+			source: {
+				src: "src/<%= pkg.name %>.js",
+				options: {
+					jshintrc: "src/.jshintrc"
+				}
+			},
+			grunt: {
+				src: [ "Gruntfile.js", "tasks/*" ],
+				options: {
+					jshintrc: ".jshintrc"
+				}
+			}
+		},
+		jsonlint: {
+			pkg: {
+				src: [ "package.json" ]
+			},
+			jscs: {
+				src: [ ".jscs.json" ]
+			},
+			bower: {
+				src: [ "bower.json" ]
+			}
+		},
+		qunit: {
+			files: [ "test/index.html" ]
+		},
+		uglify: {
+			all: {
+				files: {
+					"dist/<%= pkg.name %>.min.js": [ "dist/<%= pkg.name %>.js" ]
+				},
+				options: {
+					banner: "/*! <%= pkg.title %> v<%= pkg.version %> | (c) 2012 <%= pkg.author.name %> | Licensed <%= _.pluck(pkg.licenses, 'type').join(', ') %> */",
+					beautify: {
+						ascii_only: true
+					},
+					compress: {
+						hoist_funs: false,
+						loops: false
+					},
+					sourceMap: "dist/<%= pkg.name %>.min.map"
+				}
+			}
+		},
+		version: {
+			files: [ "package.json", "bower.json" ]
+		}
+	});
 
-    // The concatenated file won"t pass onevar
-    // But our modules can
-    delete srcHintOptions.onevar;
+	// Load grunt tasks from NPM packages
+	require("load-grunt-tasks")(grunt);
 
-    grunt.initConfig({
-        pkg: grunt.file.readJSON("package.json"),
-        dst: readOptionalJSON("dist/.destination.json"),
-        compare_size: {
-            files: [ "dist/<%= pkg.name %>.js", "dist/<%= pkg.name %>.min.js" ],
-            options: {
-                compress: {
-                    gz: function( contents ) {
-                        return gzip.zip( contents, {} ).length;
-                    }
-                },
-                cache: "build/.sizecache.json"
-            }
-        },
-        jsonlint: {
-            pkg: {
-                src: [ "package.json" ]
-            },
-            bower: {
-                src: [ "bower.json" ]
-            }
-        },
-        jshint: {
-            all: {
-                src: [
-                    "src/**/*.js", "Gruntfile.js"
-                ],
-                options: {
-                    jshintrc: true
-                }
-            },
-            dist: {
-                src: "dist/<%= pkg.name %>.js",
-                options: srcHintOptions
-            }
-        },
-        concat: {
-            options: {
-                separator: ";"
-            },
-            dist: {
-                src: ["src/**/*.js"],
-                dest: "dist/<%= pkg.name %>.js"
-            }
-        },
-        watch: {
-            files: [ "<%= jshint.all.src %>" ],
-            tasks: "dev"
-        },
-        uglify: {
-            all: {
-                files: {
-                    "dist/<%= pkg.name %>.min.js": ["dist/<%= pkg.name %>.js"]
-                },
-                options: {
-                    preserveComments: false,
-                    sourceMap: "dist/<%= pkg.name %>.min.map",
-                    sourceMappingURL: "<%= pkg.name %>.min.map",
-                    report: "min",
-                    beautify: {
-                        ascii_only: true
-                    },
-                    banner: "/*! <%= pkg.title %> - v<%= pkg.version %> - " +
-                        "<%= grunt.template.today('isoDate') %>\n" +
-                        "<%= pkg.homepage ? '* ' + pkg.homepage + '\\n' : '' %>" +
-                        "* Copyright <%= grunt.template.today('yyyy') %> <%= pkg.author.name %>" +
-                        " Licensed <%= _.pluck(pkg.licenses, 'type').join(', ') %> */\n",
-                    compress: {
-                        hoist_funs: false,
-                        loops: false,
-                        unused: false
-                    }
-                }
-            }
-        },
-        qunit: {
-            files: ["test/**/*.html"]
-        }
-    });
+	// Integrate Detectizr specific tasks
+	grunt.loadTasks("tasks");
 
-    // Load grunt tasks from NPM packages
-    require("load-grunt-tasks")(grunt);
+	grunt.registerTask("lint", [ "jsonlint", "jshint", "jscs" ]);
+	grunt.registerTask("build", [ "lint", "compile", "uglify", "dist", "compare_size" ]);
+	grunt.registerTask("test", [ "lint", "qunit" ]);
+	grunt.registerTask("default", [ "test", "compare_size" ]);
 
-    // Integrate jQuery specific tasks
-    grunt.loadTasks("build/tasks");
-
-    // Short list as a high frequency watch task
-    grunt.registerTask("dev", ["jshint"]);
-
-    // this would be run by typing "grunt test" on the command line
-    grunt.registerTask("test", ["jshint", "qunit"]);
-
-    // Default grunt
-    grunt.registerTask("default", [ "jshint", "jsonlint", "concat", "uglify", "compare_size"]);
+	// Task aliases
+	grunt.registerTask("bower", "bowercopy");
 };

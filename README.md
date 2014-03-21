@@ -37,7 +37,7 @@ Using it is a simple matter, illustrated in the following excerpt:
   </head>
   <body>
     <script>
-      Modernizr.Detectizr.detect({detectScreen:false});
+      Detectizr.detect({detectScreen:false});
     </script>
   </body>
 </html>

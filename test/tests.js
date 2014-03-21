@@ -2,8 +2,8 @@ var userAgentsToTest = [{
 	ua: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36',
 	b: 'chrome',
 	bv: '31',
-	os: 'mac',
-	osv: 'os x'
+	os: 'mac os',
+	osv: '10'
 }, {
 	ua: 'Mozilla/5.0 (Linux; U; Android 4.0.3; de-de; Build/20120717) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30',
 	b: 'safari',
@@ -18,34 +18,30 @@ var userAgentsToTest = [{
 	osv: '7'
 }];
 
-function isUserAgentTestOk(userAgentToTest) {
-	if (userAgentToTest.os == Modernizr.Detectizr.device.os && Modernizr.Detectizr.device.osVersion == userAgentToTest.osv && Modernizr.Detectizr.device.browser == userAgentToTest.b && Modernizr.Detectizr.device.browserVersion == userAgentToTest.bv) {
-		return true;
-	}
-	return false;
-}
-
 test('is Detectizr ready', function () {
-	Modernizr.Detectizr.detect();
-	notEqual(Modernizr.Detectizr.device, undefined);
+	notEqual(Detectizr.device, undefined);
 });
 
-test('useragent tests', function () {
-	for (var i = userAgentsToTest.length - 1; i >= 0; i--) {
-		Modernizr.Detectizr.device = {
-			type: '',
-			model: '',
-			orientation: '',
-			browser: '',
-			browserEngine: '',
-			browserPlugins: [],
-			browserVersion: '',
-			os: '',
-			osVersion: '',
-			osVersionFull: '',
-			userAgent: userAgentsToTest[i].ua.toLowerCase()
+var useragent2test, index4test = userAgentsToTest.length - 1;
+module("useragent", {
+	setup: function() {
+		// prepare something for all following tests
+		useragent2test = userAgentsToTest[index4test];
+		Detectizr.browser = {
+			userAgent: useragent2test.ua.toLowerCase()
 		};
-		Modernizr.Detectizr.detect();
-		ok(isUserAgentTestOk(userAgentsToTest[i]), userAgentsToTest[i].ua);
+		Detectizr.detect();
+	},
+	teardown: function() {
+		// clean up after each test
+		index4test--;
 	}
 });
+for (var i = userAgentsToTest.length - 1; i >= 0; i--) {
+	test(userAgentsToTest[i].ua, function () {
+	    equal(Detectizr.os.name, useragent2test.os, "operating system name is OK: " + useragent2test.os);
+	    equal(Detectizr.os.major, useragent2test.osv, "operating system name is OK: " + useragent2test.osv);
+	    equal(Detectizr.browser.name, useragent2test.b, "browser name is OK: " + useragent2test.b);
+	    equal(Detectizr.browser.major, useragent2test.bv, "browser version is OK: " + useragent2test.bv);
+	});
+}

@@ -1,20 +1,21 @@
 {
   "name": "detectizr",
-  "version": "1.5.0",
+  "version": "2.0.0",
+  "main": "dist/detectizr.js",
+  "license": "MIT",
   "ignore": [
     "**/.*",
     "test",
     "*.md",
     "Gruntfile.js",
-    "package.json",
-    "bower.json"
+    "package.json"
   ],
   "dependencies": {
-    "modernizr": "2.6.2"
+    "modernizr": "2.7.1"
   },
   "devDependencies": {
-    "requirejs": "~2.1.8",
-    "qunit": "~1.12.0"
+    "requirejs": "2.1.11",
+    "qunit": "1.14.0"
   },
   "keywords": [
     "detect",

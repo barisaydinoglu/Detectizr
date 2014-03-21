@@ -1,6 +1,11 @@
 .jshintignore
 .jshintrc
 
+/.editorconfig
+/.gitattributes
+/.jscs.json
+/.travis.yml
+
 /build
 /test
 /Gruntfile.js
