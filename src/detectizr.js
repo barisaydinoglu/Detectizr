@@ -493,7 +493,6 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 			Detectizr.browser = {
 				userAgent: (navigator.userAgent || navigator.vendor || window.opera).toLowerCase()
 			};
-			Detectizr.detect();
 		}
 	};
 	Detectizr.init();
