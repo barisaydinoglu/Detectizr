@@ -199,7 +199,7 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 				orientation: ""
 			};
 			device = Detectizr.device;
-			if (test(/googletv|smarttv|internet.tv|netcast|nettv|appletv|boxee|kylo|roku|dlnadoc|ce\-html/)) {
+            if (test(/googletv|smarttv|smart-tv|internet.tv|netcast|nettv|appletv|boxee|kylo|roku|dlnadoc|roku|pov_tv|hbbtv|ce\-html/)) {
 				// Check if user agent is a smart tv
 				device.type = deviceTypes[0];
 				device.model = "smartTv";
@@ -257,6 +257,9 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 						device.type = deviceTypes[3];
 					} else if (test(/solaris|sunos|bsd/)) {
 						// Check if user agent is a Solaris, SunOS, BSD Desktop
+						device.type = deviceTypes[3];
+					} else if (test(/cros/)) {
+						// Check if user agent is a Chromebook
 						device.type = deviceTypes[3];
 					} else if (test(/bot|crawler|spider|yahoo|ia_archiver|covario-ids|findlinks|dataparksearch|larbin|mediapartners-google|ng-search|snappy|teoma|jeeves|tineye/) && !test(/mobile/)) {
 						// Check if user agent is a Desktop BOT/Crawler/Spider
