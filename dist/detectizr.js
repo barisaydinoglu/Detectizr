@@ -1,16 +1,16 @@
 /*!
- * Detectizr v2.0.0
+ * Detectizr v2.1.0
  * http://barisaydinoglu.github.com/Detectizr/
  *
  * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright 2012
  * Released under the MIT license
  *
- * Date: 2014-12-18
+ * Date: 2015-01-02
  */
 window.Detectizr = (function(window, navigator, document, undefined) {
 	var Detectizr = {},
 		Modernizr = window.Modernizr,
-		deviceTypes = [ "tv", "tablet", "mobile", "desktop" ],
+		deviceTypes = ["tv", "tablet", "mobile", "desktop"],
 		options = {
 			// option for enabling HTML classes of all features (not only the true features) to be added
 			addAllFeaturesAsClass: false,
@@ -27,29 +27,29 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 			// option for enabling detection of common browser plugins
 			detectPlugins: true
 		},
-		plugins2detect = [ {
+		plugins2detect = [{
 			name: "adobereader",
-			substrs: [ "Adobe", "Acrobat" ],
+			substrs: ["Adobe", "Acrobat"],
 			// AcroPDF.PDF is used by version 7 and later
 			// PDF.PdfCtrl is used by version 6 and earlier
-			progIds: [ "AcroPDF.PDF", "PDF.PDFCtrl.5" ]
+			progIds: ["AcroPDF.PDF", "PDF.PDFCtrl.5"]
 		}, {
 			name: "flash",
-			substrs: [ "Shockwave Flash" ],
-			progIds: [ "ShockwaveFlash.ShockwaveFlash.1" ]
+			substrs: ["Shockwave Flash"],
+			progIds: ["ShockwaveFlash.ShockwaveFlash.1"]
 		}, {
 			name: "wmplayer",
-			substrs: [ "Windows Media" ],
-			progIds: [ "wmplayer.ocx" ]
+			substrs: ["Windows Media"],
+			progIds: ["wmplayer.ocx"]
 		}, {
 			name: "silverlight",
-			substrs: [ "Silverlight" ],
-			progIds: [ "AgControl.AgControl" ]
+			substrs: ["Silverlight"],
+			progIds: ["AgControl.AgControl"]
 		}, {
 			name: "quicktime",
-			substrs: [ "QuickTime" ],
-			progIds: [ "QuickTime.QuickTime" ]
-		} ],
+			substrs: ["QuickTime"],
+			progIds: ["QuickTime.QuickTime"]
+		}],
 		rclass = /[\t\r\n]/g,
 		docElement = document.documentElement,
 		resizeTimeoutId,
@@ -115,12 +115,12 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 
 	// add version test to Modernizr
 	function addVersionTest(version, major, minor) {
-		if ( !!version) {
+		if (!!version) {
 			version = toCamel(version);
-			if ( !!major) {
+			if (!!major) {
 				major = toCamel(major);
 				addConditionalTest(version + major, true);
-				if ( !!minor) {
+				if (!!minor) {
 					addConditionalTest(version + major + "_" + minor, true);
 				}
 			}
@@ -147,7 +147,7 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 
 	// add test to Modernizr based on a condition
 	function addConditionalTest(feature, test) {
-		if ( !!feature && !!Modernizr) {
+		if (!!feature && !!Modernizr) {
 			if (options.addAllFeaturesAsClass) {
 				Modernizr.addTest(feature, test);
 			} else {
@@ -199,7 +199,7 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 				orientation: ""
 			};
 			device = Detectizr.device;
-			if (test(/googletv|smarttv|internet.tv|netcast|nettv|appletv|boxee|kylo|roku|dlnadoc|ce\-html/)) {
+			if (test(/googletv|smarttv|smart-tv|internet.tv|netcast|nettv|appletv|boxee|kylo|roku|dlnadoc|roku|pov_tv|hbbtv|ce\-html/)) {
 				// Check if user agent is a smart tv
 				device.type = deviceTypes[0];
 				device.model = "smartTv";
@@ -281,7 +281,7 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 
 		/** Screen detection **/
 		if (options.detectScreen) {
-			if ( !!Modernizr && !!Modernizr.mq) {
+			if (!!Modernizr && !!Modernizr.mq) {
 				addConditionalTest("smallScreen", Modernizr.mq("only screen and (max-width: 480px)"));
 				addConditionalTest("verySmallScreen", Modernizr.mq("only screen and (max-width: 320px)"));
 				addConditionalTest("veryVerySmallScreen", Modernizr.mq("only screen and (max-width: 240px)"));
@@ -361,11 +361,11 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 					os.name = "bsd";
 				}
 			}
-			if ( !!os.name) {
+			if (!!os.name) {
 				addConditionalTest(os.name, true);
-				if ( !!os.major) {
+				if (!!os.major) {
 					addVersionTest(os.name, os.major);
-					if ( !!os.minor) {
+					if (!!os.minor) {
 						addVersionTest(os.name, os.major, os.minor);
 					}
 				}
@@ -421,11 +421,11 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 			} else if (is("mozilla/")) {
 				browser.engine = "gecko";
 			}
-			if ( !!browser.name) {
+			if (!!browser.name) {
 				addConditionalTest(browser.name, true);
-				if ( !!browser.major) {
+				if (!!browser.major) {
 					addVersionTest(browser.name, browser.major);
-					if ( !!browser.minor) {
+					if (!!browser.minor) {
 						addVersionTest(browser.name, browser.major, browser.minor);
 					}
 				}
@@ -487,7 +487,6 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 			}
 		}
 	}
-
 	Detectizr.detect = function(settings) {
 		return detect(settings);
 	};

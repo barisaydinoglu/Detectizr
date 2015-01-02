@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 			}
 		},
 		compare_size: {
-			files: [ "dist/<%= pkg.name %>.js", "dist/<%= pkg.name %>.min.js" ],
+			files: ["dist/<%= pkg.name %>.js", "dist/<%= pkg.name %>.min.js"],
 			options: {
 				compress: {
 					gz: function(contents) {
@@ -60,7 +60,7 @@ module.exports = function(grunt) {
 				}
 			},
 			grunt: {
-				src: [ "Gruntfile.js", "tasks/*" ],
+				src: ["Gruntfile.js", "tasks/*"],
 				options: {
 					jshintrc: ".jshintrc"
 				}
@@ -68,23 +68,22 @@ module.exports = function(grunt) {
 		},
 		jsonlint: {
 			pkg: {
-				src: [ "package.json" ]
+				src: ["package.json"]
 			},
 			jscs: {
-				src: [ ".jscs.json" ]
+				src: [".jscs.json"]
 			},
 			bower: {
-				src: [ "bower.json" ]
+				src: ["bower.json"]
 			}
 		},
 		qunit: {
-			files: [ "test/index.html" ]
+			files: ["test/index.html"]
 		},
 		uglify: {
 			all: {
-				files: {
-					"dist/<%= pkg.name %>.min.js": [ "dist/<%= pkg.name %>.js" ]
-				},
+				src: "dist/<%= pkg.name %>.js",
+				dest: "dist/<%= pkg.name %>.min.js",
 				options: {
 					banner: "/*! <%= pkg.title %> v<%= pkg.version %> | (c) 2012 <%= pkg.author.name %> | Licensed <%= _.pluck(pkg.licenses, 'type').join(', ') %> */",
 					beautify: {
@@ -94,12 +93,13 @@ module.exports = function(grunt) {
 						hoist_funs: false,
 						loops: false
 					},
-					sourceMap: "dist/<%= pkg.name %>.min.map"
+					sourceMap: true,
+					sourceMapName: "dist/<%= pkg.name %>.min.map"
 				}
 			}
 		},
 		version: {
-			files: [ "package.json", "bower.json" ]
+			files: ["package.json", "bower.json"]
 		}
 	});
 
@@ -109,10 +109,10 @@ module.exports = function(grunt) {
 	// Integrate Detectizr specific tasks
 	grunt.loadTasks("tasks");
 
-	grunt.registerTask("lint", [ "jsonlint", "jshint", "jscs" ]);
-	grunt.registerTask("build", [ "lint", "compile", "uglify", "dist", "compare_size" ]);
-	grunt.registerTask("test", [ "lint", "qunit" ]);
-	grunt.registerTask("default", [ "test", "compare_size" ]);
+	grunt.registerTask("lint", ["jsonlint", "jshint", "jscs"]);
+	grunt.registerTask("build", ["lint", "compile", "uglify", "dist", "compare_size"]);
+	grunt.registerTask("test", ["lint", "qunit"]);
+	grunt.registerTask("default", ["test", "compare_size"]);
 
 	// Task aliases
 	grunt.registerTask("bower", "bowercopy");

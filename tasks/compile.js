@@ -13,8 +13,8 @@ module.exports = function( grunt ) {
 
 			// Embed version and date
 			compiled = compiled
-				.replace( /@VERSION/g, version )
-				.replace( "@DATE", function() {
+				.replace(/@VERSION/g, version)
+				.replace("@DATE", function() {
 					var date = new Date();
 
 					// YYYY-MM-DD
@@ -28,7 +28,7 @@ module.exports = function( grunt ) {
 			// Write source to file
 			grunt.file.write( dest, compiled );
 
-			grunt.log.ok( "File written to " + dest );
+			grunt.log.ok("File written to " + dest);
 		}
 	);
 };
