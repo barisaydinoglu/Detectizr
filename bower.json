@@ -13,10 +13,6 @@
   "dependencies": {
     "modernizr": "2.7.1"
   },
-  "devDependencies": {
-    "requirejs": "2.1.11",
-    "qunit": "1.14.0"
-  },
   "keywords": [
     "detect",
     "determine",

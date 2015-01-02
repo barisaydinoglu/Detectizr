@@ -18,7 +18,7 @@ module.exports = function(grunt) {
 				fs.writeFileSync(filename, text, "utf-8");
 			} else if (/\.min\.js$/.test(filename)) {
 				// Wrap sourceMap directive in multiline comments (#13274)
-				text = text.replace(/\n?(\/\/@\s*sourceMappingURL=)(.*)/, function(_, directive, path) {
+				text = text.replace(/\n?(\/\/#\s*sourceMappingURL=)(.*)/, function(_, directive, path) {
 					map = "\n" + directive + path.replace(/^dist\//, "");
 					return "";
 				});
