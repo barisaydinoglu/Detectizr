@@ -55,6 +55,7 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 		resizeTimeoutId,
 		oldOrientation;
 
+	// Create Global "extend" method, so Detectizr does not need jQuery.extend
 	function extend(obj, extObj) {
 		var a, b, i;
 		if (arguments.length > 2) {
@@ -127,24 +128,6 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 		}
 	}
 
-	function checkOrientation() {
-		//timeout wrapper points with doResizeCode as callback
-		window.clearTimeout(resizeTimeoutId);
-		resizeTimeoutId = window.setTimeout(function() {
-			oldOrientation = Detectizr.device.orientation;
-			//wrapper for height/width check
-			if (window.innerHeight > window.innerWidth) {
-				Detectizr.device.orientation = "portrait";
-			} else {
-				Detectizr.device.orientation = "landscape";
-			}
-			addConditionalTest(Detectizr.device.orientation, true);
-			if (oldOrientation !== Detectizr.device.orientation) {
-				addConditionalTest(oldOrientation, false);
-			}
-		}, 10);
-	}
-
 	// add test to Modernizr based on a condition
 	function addConditionalTest(feature, test) {
 		if (!!feature && !!Modernizr) {
@@ -185,10 +168,58 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 		}
 	}
 
+	function checkOrientation() {
+		//timeout wrapper points with doResizeCode as callback
+		window.clearTimeout(resizeTimeoutId);
+		resizeTimeoutId = window.setTimeout(function() {
+			oldOrientation = Detectizr.device.orientation;
+			//wrapper for height/width check
+			if (window.innerHeight > window.innerWidth) {
+				Detectizr.device.orientation = "portrait";
+			} else {
+				Detectizr.device.orientation = "landscape";
+			}
+			addConditionalTest(Detectizr.device.orientation, true);
+			if (oldOrientation !== Detectizr.device.orientation) {
+				addConditionalTest(oldOrientation, false);
+			}
+		}, 10);
+	}
+
+	function detectPlugin(substrs) {
+		var plugins = navigator.plugins,
+			plugin, haystack, pluginFoundText, j, k;
+		for (j = plugins.length - 1; j >= 0; j--) {
+			plugin = plugins[j];
+			haystack = plugin.name + plugin.description;
+			pluginFoundText = 0;
+			for (k = substrs.length; k >= 0; k--) {
+				if (haystack.indexOf(substrs[k]) !== -1) {
+					pluginFoundText += 1;
+				}
+			}
+			if (pluginFoundText === substrs.length) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	function detectObject(progIds) {
+		var j;
+		for (j = progIds.length - 1; j >= 0; j--) {
+			try {
+				new ActiveXObject(progIds[j]);
+			} catch (e) {
+				// Ignore
+			}
+		}
+		return false;
+	}
+
 	function detect(opt) {
-		// Create Global "extend" method, so Detectizr does not need jQuery.extend
-		var that = this,
-			i, j, k, device, os, browser, plugin2detect, pluginFound;
+		var i, j, device, os, browser, plugin2detect, pluginFound;
+
 		options = extend({}, options, opt || {});
 
 		/** Device detection **/
@@ -281,10 +312,24 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 
 		/** Screen detection **/
 		if (options.detectScreen) {
+			device.screen = {};
 			if (!!Modernizr && !!Modernizr.mq) {
-				addConditionalTest("smallScreen", Modernizr.mq("only screen and (max-width: 480px)"));
-				addConditionalTest("verySmallScreen", Modernizr.mq("only screen and (max-width: 320px)"));
-				addConditionalTest("veryVerySmallScreen", Modernizr.mq("only screen and (max-width: 240px)"));
+				if (Modernizr.mq("only screen and (max-width: 240px)")) {
+					device.screen.size = "veryVerySmall";
+					addConditionalTest("veryVerySmallScreen", true);
+				} else if (Modernizr.mq("only screen and (max-width: 320px)")) {
+					device.screen.size = "verySmall";
+					addConditionalTest("verySmallScreen", true);
+				} else if (Modernizr.mq("only screen and (max-width: 480px)")) {
+					device.screen.size = "small";
+					addConditionalTest("smallScreen", true);
+				}
+				if (device.type === deviceTypes[1] || device.type === deviceTypes[2]) {
+					if (Modernizr.mq("only screen and (-moz-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen  and (min-device-pixel-ratio: 1.3), only screen and (min-resolution: 1.3dppx)")) {
+						device.screen.resolution = "high";
+						addConditionalTest("highresolution", true);
+					}
+				}
 			}
 			if (device.type === deviceTypes[1] || device.type === deviceTypes[2]) {
 				window.onresize = function(event) {
@@ -440,41 +485,13 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 		/** Plugin detection **/
 		if (options.detectPlugins) {
 			browser.plugins = [];
-			that.detectPlugin = function(substrs) {
-				var plugins = navigator.plugins,
-					plugin, haystack, pluginFoundText;
-				for (j = plugins.length - 1; j >= 0; j--) {
-					plugin = plugins[j];
-					haystack = plugin.name + plugin.description;
-					pluginFoundText = 0;
-					for (k = substrs.length; k >= 0; k--) {
-						if (haystack.indexOf(substrs[k]) !== -1) {
-							pluginFoundText += 1;
-						}
-					}
-					if (pluginFoundText === substrs.length) {
-						return true;
-					}
-				}
-				return false;
-			};
-			that.detectObject = function(progIds) {
-				for (j = progIds.length - 1; j >= 0; j--) {
-					try {
-						new ActiveXObject(progIds[j]);
-					} catch (e) {
-						// Ignore
-					}
-				}
-				return false;
-			};
 			for (i = plugins2detect.length - 1; i >= 0; i--) {
 				plugin2detect = plugins2detect[i];
 				pluginFound = false;
 				if (window.ActiveXObject) {
-					pluginFound = that.detectObject(plugin2detect.progIds);
+					pluginFound = detectObject(plugin2detect.progIds);
 				} else if (navigator.plugins) {
-					pluginFound = that.detectPlugin(plugin2detect.substrs);
+					pluginFound = detectPlugin(plugin2detect.substrs);
 				}
 				if (pluginFound) {
 					browser.plugins.push(plugin2detect.name);
