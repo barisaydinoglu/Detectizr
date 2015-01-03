@@ -48,6 +48,7 @@ module.exports = function(grunt) {
 			src: "src/**/*.js",
 			gruntfile: "Gruntfile.js",
 			tasks: "tasks/*.js",
+			tests: "test/tests.js",
 			options: {
 				config: ".jscs.json"
 			}
