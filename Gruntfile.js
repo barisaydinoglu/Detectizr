@@ -1,25 +1,27 @@
 module.exports = function(grunt) {
 	"use strict";
 
-	var gzip = require("gzip-js");
+	function readOptionalJSON(filepath) {
+		var data = {};
+		try {
+			data = JSON.parse(stripJSONComments(fs.readFileSync(filepath, {
+				encoding: "utf8"
+			})));
+		} catch (e) {
+		}
+		return data;
+	}
+
+	var fs = require("fs"),
+		stripJSONComments = require("strip-json-comments"),
+		gzip = require("gzip-js"),
+		srcHintOptions = readOptionalJSON("src/.jshintrc");
 
 	grunt.initConfig({
+		dst: readOptionalJSON("dist/.destination.json"),
 		pkg: grunt.file.readJSON("package.json"),
-		bowercopy: {
-			options: {
-				clean: true
-			},
-			tests: {
-				files: {
-					"test/libs/qunit.js": "qunit/qunit/qunit.js",
-					"test/libs/qunit.css": "qunit/qunit/qunit.css",
-					"test/libs/require.js": "requirejs/require.js",
-					"test/libs/modernizr.js": "modernizr/modernizr.js"
-				}
-			}
-		},
-		compare_size: {
-			files: ["dist/<%= pkg.name %>.js", "dist/<%= pkg.name %>.min.js"],
+		"compare_size": {
+			files: ["dist/detectizr.js", "dist/detectizr.min.js"],
 			options: {
 				compress: {
 					gz: function(contents) {
@@ -29,42 +31,47 @@ module.exports = function(grunt) {
 				cache: "dist/.sizecache.json"
 			}
 		},
-		compile: {
+		build: {
 			all: {
-				dest: "dist/<%= pkg.name %>.js",
-				src: "src/<%= pkg.name %>.js"
+				dest: "dist/detectizr.js",
+				src: "src/detectizr.js"
 			}
 		},
-		coveralls: {
-			options: {
-				force: true
-			},
+		npmcopy: {
 			all: {
-				// LCOV coverage file relevant to every target
-				src: "_tests/reports/lcov/lcov.info"
+				options: {
+					destPrefix: "external"
+				},
+				files: {
+					"qunit/qunit.js": "qunitjs/qunit/qunit.js",
+					"qunit/qunit.css": "qunitjs/qunit/qunit.css",
+					"qunit/LICENSE.txt": "qunitjs/LICENSE.txt",
+
+					"requirejs/require.js": "requirejs/require.js"
+				}
 			}
 		},
 		jscs: {
 			src: "src/**/*.js",
 			gruntfile: "Gruntfile.js",
-			tasks: "tasks/*.js",
+			tasks: "build/tasks/*.js",
 			tests: "test/tests.js",
 			options: {
 				config: ".jscs.json"
 			}
 		},
 		jshint: {
-			source: {
-				src: "src/<%= pkg.name %>.js",
+			all: {
+				src: [
+					"src/**/*.js", "Gruntfile.js", "test/**/*.js", "build/**/*.js"
+				],
 				options: {
-					jshintrc: "src/.jshintrc"
+					jshintrc: true
 				}
 			},
-			grunt: {
-				src: ["Gruntfile.js", "tasks/*"],
-				options: {
-					jshintrc: ".jshintrc"
-				}
+			dist: {
+				src: "dist/detectizr.js",
+				options: srcHintOptions
 			}
 		},
 		jsonlint: {
@@ -81,26 +88,31 @@ module.exports = function(grunt) {
 		qunit: {
 			files: ["test/index.html"]
 		},
+		watch: {
+			files: ["<%= jshint.all.src %>"],
+			tasks: ["dev"]
+		},
 		uglify: {
 			all: {
-				src: "dist/<%= pkg.name %>.js",
-				dest: "dist/<%= pkg.name %>.min.js",
+				files: {
+					"dist/detectizr.min.js": ["dist/detectizr.js"]
+				},
 				options: {
-					banner: "/*! <%= pkg.title %> v<%= pkg.version %> | (c) 2012 <%= pkg.author.name %> | Licensed <%= _.pluck(pkg.licenses, 'type').join(', ') %> */",
-					beautify: {
-						ascii_only: true
-					},
-					compress: {
-						hoist_funs: false,
-						loops: false
-					},
+					preserveComments: false,
 					sourceMap: true,
-					sourceMapName: "dist/<%= pkg.name %>.min.map"
+					sourceMapName: "dist/detectizr.min.map",
+					report: "min",
+					beautify: {
+						"ascii_only": true
+					},
+					banner: "/*! <%= pkg.title %> v<%= pkg.version %> | (c) 2012 <%= pkg.author.name %> | Licensed <%= _.pluck(pkg.licenses, 'type').join(', ') %> */",
+					compress: {
+						"hoist_funs": false,
+						loops: false,
+						unused: false
+					}
 				}
 			}
-		},
-		version: {
-			files: ["package.json", "bower.json"]
 		}
 	});
 
@@ -108,13 +120,14 @@ module.exports = function(grunt) {
 	require("load-grunt-tasks")(grunt);
 
 	// Integrate Detectizr specific tasks
-	grunt.loadTasks("tasks");
+	grunt.loadTasks("build/tasks");
 
 	grunt.registerTask("lint", ["jsonlint", "jshint", "jscs"]);
-	grunt.registerTask("build", ["lint", "compile", "uglify", "dist", "compare_size"]);
-	grunt.registerTask("test", ["lint", "qunit"]);
-	grunt.registerTask("default", ["test", "compare_size"]);
 
-	// Task aliases
-	grunt.registerTask("bower", "bowercopy");
+	grunt.registerTask("test", ["lint", "qunit"]);
+
+	// Short list as a high frequency watch task
+	grunt.registerTask("dev", ["build:*:*", "lint", "uglify", "dist:*"]);
+
+	grunt.registerTask("default", ["dev", "test", "compare_size"]);
 };

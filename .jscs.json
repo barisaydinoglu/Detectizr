@@ -39,7 +39,7 @@
   "requireSpaceBeforeBlockStatements": true,
   "disallowImplicitTypeConversion": ["string"],
   "disallowMultipleLineBreaks": true,
-  "validateJSDoc": {
+  "jsDoc": {
     "checkParamNames": true,
     "requireParamTypes": true
   }

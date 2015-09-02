@@ -1,34 +1,34 @@
 var userAgentsToTest = [{
-	ua: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36',
-	b: 'chrome',
-	bv: '31',
-	os: 'mac os',
-	osv: '10',
-	dt: 'desktop',
-	dm: 'mac'
+	ua: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36",
+	b: "chrome",
+	bv: "31",
+	os: "mac os",
+	osv: "10",
+	dt: "desktop",
+	dm: "mac"
 }, {
-	ua: 'Mozilla/5.0 (Linux; U; Android 4.0.3; de-de; Build/20120717) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30',
-	b: 'safari',
-	bv: '4',
-	os: 'android',
-	osv: '4',
-	dt: 'tablet',
-	dm: 'android'
+	ua: "Mozilla/5.0 (Linux; U; Android 4.0.3; de-de; Build/20120717) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30",
+	b: "safari",
+	bv: "4",
+	os: "android",
+	osv: "4",
+	dt: "tablet",
+	dm: "android"
 }, {
-	ua: 'Mozilla/5.0 (iPhone; CPU iPhone OS 7_0_4 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) CriOS/31.0.1650.18 Mobile/11B554a Safari/8536.25 (3AE36537-DD6D-42A2-ACA6-7F76E297E70F)',
-	b: 'chrome',
-	bv: '31',
-	os: 'ios',
-	osv: '7',
-	dt: 'mobile',
-	dm: 'iphone'
+	ua: "Mozilla/5.0 (iPhone; CPU iPhone OS 7_0_4 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) CriOS/31.0.1650.18 Mobile/11B554a Safari/8536.25 (3AE36537-DD6D-42A2-ACA6-7F76E297E70F)",
+	b: "chrome",
+	bv: "31",
+	os: "ios",
+	osv: "7",
+	dt: "mobile",
+	dm: "iphone"
 }, {
-	ua: 'Mozilla/5.0 (SMART-TV; X11; Linux i686) AppleWebKit/534.7 (KHTML, like Gecko) Version/5.0 Safari/534.7',
-	b: 'safari',
-	bv: '5',
-	os: 'linux',
-	dt: 'tv',
-	dm: 'smartTv'
+	ua: "Mozilla/5.0 (SMART-TV; X11; Linux i686) AppleWebKit/534.7 (KHTML, like Gecko) Version/5.0 Safari/534.7",
+	b: "safari",
+	bv: "5",
+	os: "linux",
+	dt: "tv",
+	dm: "smartTv"
 }];
 
 function assertEqual(val1, val2, name) {
@@ -37,7 +37,7 @@ function assertEqual(val1, val2, name) {
 	}
 }
 
-test('is Detectizr ready', function() {
+test("is Detectizr ready", function() {
 	notEqual(Detectizr.device, undefined);
 });
 
