@@ -3,57 +3,39 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=640" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
-    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-    <script type="text/javascript" src="javascripts/modernizr.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $('#main_content').headsmart()
-      })
-    </script>
     <title>Detectizr by barisaydinoglu</title>
   </head>
 
   <body>
-    <a id="forkme_banner" href="https://github.com/barisaydinoglu/Detectizr">View on GitHub</a>
-    <div class="shell">
-
-      <header>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <h1>Detectizr</h1>
-            <h2>A Modernizr extension to detect device, device model, screen size, operating system, and browser details.</h2>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-      </header>
-
-      <section id="downloads">
-        <span class="inner">
-          <a href="https://github.com/barisaydinoglu/Detectizr/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/barisaydinoglu/Detectizr/tarball/master" class="tgz"><em>download</em> .TGZ</a>
-        </span>
-      </section>
-
-
-      <span class="banner-fix"></span>
-
-
-      <section id="main_content">
+    <header>
+      <div class="inner">
         <h1>Detectizr</h1>
+        <h2>A Modernizr extension to detect device, device model, screen size, operating system, and browser details.</h2>
+        <a href="https://github.com/barisaydinoglu/Detectizr" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="detectizr" class="anchor" href="#detectizr" aria-hidden="true"><span class="octicon octicon-link"></span></a>Detectizr</h1>
 
 <p>Detectizr is a Modernizr extension to detect</p>
 
 <ul>
 <li>device</li>
 <li>device model</li>
-<li>device orientation</li>
 <li>screen size</li>
 <li>operating system</li>
 <li>operating system version</li>
@@ -61,64 +43,77 @@
 <li>browser version</li>
 <li>browser engine</li>
 <li>browser plugins</li>
-</ul><p>Detection of these sets are optional and can be disabled.</p>
+</ul>
+
+<p>Detection of these sets are optional and can be disabled.</p>
 
 <p>Detectable device types are: tv (includes smart tv and game console), mobile, tablet, and desktop.
 Device models of tv, mobile and tablet are being detected.</p>
 
 <p>Code quality of Detectizr is validated via <a href="http://www.jslint.com" title="JSLint">JSLint</a> &amp; <a href="http://www.jshint.com" title="JSHint">JSHint</a>.</p>
 
-<h1>Sample Usage</h1>
+<h1>
+<a id="sample-usage" class="anchor" href="#sample-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sample Usage</h1>
 
 <p>This is a library that uses your trusty little Modernizr to give you the possibility of specifying required features for a certain stylesheet.
 Using it is a simple matter, illustrated in the following excerpt:</p>
 
-<div class="highlight">
-<pre><span class="nt">&lt;html&gt;</span>
-  <span class="nt">&lt;head&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"modernizr.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"detectizr.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-  <span class="nt">&lt;/head&gt;</span>
-  <span class="nt">&lt;body&gt;</span>
-    <span class="nt">&lt;script&gt;</span>
-      <span class="nx">Modernizr</span><span class="p">.</span><span class="nx">Detectizr</span><span class="p">.</span><span class="nx">detect</span><span class="p">({</span><span class="nx">detectScreen</span><span class="o">:</span><span class="kc">false</span><span class="p">});</span>
-    <span class="nt">&lt;/script&gt;</span>
-  <span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
-</pre>
-</div>
-
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">html</span>&gt;
+  &lt;<span class="pl-ent">head</span>&gt;
+<span class="pl-s1">    &lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>modernizr.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</span>
+<span class="pl-s1">    &lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>detectizr.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</span>
+  &lt;/<span class="pl-ent">head</span>&gt;
+  &lt;<span class="pl-ent">body</span>&gt;
+<span class="pl-s1">    &lt;<span class="pl-ent">script</span>&gt;</span>
+<span class="pl-s1">      Modernizr.Detectizr.detect({detectScreen<span class="pl-k">:</span><span class="pl-c1">false</span>});</span>
+<span class="pl-s1">    &lt;/<span class="pl-ent">script</span>&gt;</span>
+  &lt;/<span class="pl-ent">body</span>&gt;
+&lt;/<span class="pl-ent">html</span>&gt;</pre></div>
 
 <p>Just remember to include Modernizr before Detectizr, and you're good to go!</p>
 
 <p>Licensed under MIT license.</p>
 
-<h2>Other interesting projects</h2>
+<h2>
+<a id="other-interesting-projects" class="anchor" href="#other-interesting-projects" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other interesting projects</h2>
 
 <ul>
 <li>
 <a href="https://github.com/Modernizr/Modernizr" title="Modernizr">Modernizr</a> is required for Detectizer. Remember to put Modernizr before Detectizr.</li>
 <li>
-<a href="https://github.com/bjankord/Categorizr" title="Categorizr">Categorizr</a> is a server side device and OS detection script written in PHP. Detectizr inspired by its device detection.</li>
+<a href="https://github.com/bjankord/Categorizr" title="Categorizr">Categorizr</a> is a server side device and OS detection script wirtten in PHP. Detectizr inspired by its device detection.</li>
 <li>
 <a href="http://rafael.adm.br/css_browser_selector/" title="CSS Browser Selector">CSS Browser Selector</a> is a client side browser detection script. Detectizr inspired by its browser detection.</li>
 </ul>
-      </section>
+        </section>
 
-      <footer>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <p>this project by <a href="https://github.com/barisaydinoglu">barisaydinoglu</a> can be found on <a href="https://github.com/barisaydinoglu/Detectizr">GitHub</a></p>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
-        <span class="octocat"></span>
-      </footer>
+        <aside id="sidebar">
+          <a href="https://github.com/barisaydinoglu/Detectizr/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/barisaydinoglu/Detectizr/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
 
+          <p class="repo-owner"><a href="https://github.com/barisaydinoglu/Detectizr"></a> is maintained by <a href="https://github.com/barisaydinoglu">barisaydinoglu</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
     </div>
 
-    
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-2551007-21");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
   </body>
 </html>
