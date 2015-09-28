@@ -364,7 +364,9 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 			if (!os.name) {
 				if (is("win") || is("16bit")) {
 					os.name = "windows";
-					if (is("windows nt 6.3")) {
+					if (is("windows nt 10")) {
+						setVersion(os, "10");
+					} else if (is("windows nt 6.3")) {
 						setVersion(os, "8.1");
 					} else if (is("windows nt 6.2") || test(/\(windows 8\)/)) { //windows 8 chrome mac fix
 						setVersion(os, "8");
@@ -448,6 +450,10 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 				setVersion(browser, (test(/version\/([\d\.]+)/) ? RegExp.$1 : (test(/opera(\s|\/)([\d\.]+)/) ? RegExp.$2 : "")));
 			} else if (is("konqueror")) {
 				browser.name = "konqueror";
+			} else if (is("edge")) {
+				browser.engine = "webkit";
+				browser.name = "edge";
+				setVersion(browser, (test(/edge\/([\d\.]+)/) ? RegExp.$1 : ""));
 			} else if (is("chrome")) {
 				browser.engine = "webkit";
 				browser.name = "chrome";

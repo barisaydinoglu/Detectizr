@@ -2,7 +2,7 @@
   "name": "detectizr",
   "title": "Detectizr",
   "description": "Detectizr is a Modernizr extension to detect device, browser, operating system and screen.",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "main": "dist/detectizr.js",
   "homepage": "https://github.com/barisaydinoglu/Detectizr",
   "author": {

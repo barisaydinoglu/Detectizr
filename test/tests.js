@@ -29,11 +29,19 @@ var userAgentsToTest = [{
 	os: "linux",
 	dt: "tv",
 	dm: "smartTv"
+}, {
+	ua: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240",
+	b: "edge",
+	bv: "12",
+	os: "windows",
+	osv: "10",
+	dt: "desktop",
+	dm: ""
 }];
 
 function assertEqual(val1, val2, name) {
 	if (val2 !== undefined) {
-		equal(val1, val2, name + " is OK: " + val2);
+		equal(val1, val2, "expected " + name + " is '" + val2 + "'");
 	}
 }
 
