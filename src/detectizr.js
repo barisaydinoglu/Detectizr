@@ -242,7 +242,7 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 				// Check if user agent is a iPad
 				device.type = deviceTypes[1];
 				device.model = "ipad";
-			} else if ((test(/tablet/) && !test(/rx-34/)) || test(/folio/)) {
+			} else if ((test(/tablet/) && !test(/rx-34/) && !test(/shield/)) || test(/folio/)) {
 				// Check if user agent is a Tablet
 				device.type = deviceTypes[1];
 				device.model = String(exec(/playbook/) || "");
