@@ -260,7 +260,7 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 				device.model = "android";
 			} else if (test(/bb10/)) {
 				// Check if user agent is a BB10 device
-				device.type = deviceTypes[1];
+				device.type = deviceTypes[2];
 				device.model = "blackberry";
 			} else {
 				// Check if user agent is one of common mobile types
