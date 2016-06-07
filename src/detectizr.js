@@ -504,7 +504,7 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 					addConditionalTest(plugin2detect.name, true);
 				}
 			}
-			if (navigator.javaEnabled()) {
+			if (typeof navigator.javaEnabled === "function" && navigator.javaEnabled()) {
 				browser.plugins.push("java");
 				addConditionalTest("java", true);
 			}
