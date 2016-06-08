@@ -5,7 +5,7 @@
  * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright 2012
  * Released under the MIT license
  *
- * Date: 2015-09-28T21:37Z
+ * Date: 2016-06-07T11:06Z
  */
 window.Detectizr = (function(window, navigator, document, undefined) {
 	var Detectizr = {},
@@ -242,7 +242,7 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 				// Check if user agent is a iPad
 				device.type = deviceTypes[1];
 				device.model = "ipad";
-			} else if ((test(/tablet/) && !test(/rx-34/)) || test(/folio/)) {
+			} else if ((test(/tablet/) && !test(/rx-34/) && !test(/shield/)) || test(/folio/)) {
 				// Check if user agent is a Tablet
 				device.type = deviceTypes[1];
 				device.model = String(exec(/playbook/) || "");
@@ -260,7 +260,7 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 				device.model = "android";
 			} else if (test(/bb10/)) {
 				// Check if user agent is a BB10 device
-				device.type = deviceTypes[1];
+				device.type = deviceTypes[2];
 				device.model = "blackberry";
 			} else {
 				// Check if user agent is one of common mobile types
@@ -504,7 +504,7 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 					addConditionalTest(plugin2detect.name, true);
 				}
 			}
-			if (navigator.javaEnabled()) {
+			if (typeof navigator.javaEnabled === "function" && navigator.javaEnabled()) {
 				browser.plugins.push("java");
 				addConditionalTest("java", true);
 			}
