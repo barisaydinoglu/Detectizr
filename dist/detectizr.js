@@ -5,7 +5,7 @@
  * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright 2012
  * Released under the MIT license
  *
- * Date: 2016-06-07T11:06Z
+ * Date: 2016-06-10T11:58Z
  */
 window.Detectizr = (function(window, navigator, document, undefined) {
 	var Detectizr = {},
@@ -516,7 +516,7 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 	Detectizr.init = function() {
 		if (Detectizr !== undefined) {
 			Detectizr.browser = {
-				userAgent: (navigator.userAgent || navigator.vendor || window.opera).toLowerCase()
+				userAgent: (navigator.userAgent || navigator.vendor || window.opera || "").toLowerCase()
 			};
 			Detectizr.detect();
 		}
