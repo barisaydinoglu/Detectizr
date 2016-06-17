@@ -516,7 +516,7 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 	Detectizr.init = function() {
 		if (Detectizr !== undefined) {
 			Detectizr.browser = {
-				userAgent: (navigator.userAgent || navigator.vendor || window.opera).toLowerCase()
+				userAgent: (navigator.userAgent || navigator.vendor || window.opera || "").toLowerCase()
 			};
 			Detectizr.detect();
 		}
