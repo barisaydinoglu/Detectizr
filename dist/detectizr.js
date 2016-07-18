@@ -5,7 +5,7 @@
  * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright 2012
  * Released under the MIT license
  *
- * Date: 2016-06-10T11:58Z
+ * Date: 2016-07-18T15:34Z
  */
 window.Detectizr = (function(window, navigator, document, undefined) {
 	var Detectizr = {},
@@ -292,6 +292,7 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 					} else if (test(/cros/)) {
 						// Check if user agent is a Chromebook
 						device.type = deviceTypes[3];
+						device.model = "chromebook";
 					} else if (test(/bot|crawler|spider|yahoo|ia_archiver|covario-ids|findlinks|dataparksearch|larbin|mediapartners-google|ng-search|snappy|teoma|jeeves|tineye/) && !test(/mobile/)) {
 						// Check if user agent is a Desktop BOT/Crawler/Spider
 						device.type = deviceTypes[3];
@@ -396,6 +397,8 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 					}
 				} else if (is("webtv")) {
 					os.name = "webtv";
+				} else if (is("x11") && test(/cros/)) {
+					os.name ="chromeos";
 				} else if (is("x11") || is("inux")) {
 					os.name = "linux";
 				} else if (is("sunos")) {
