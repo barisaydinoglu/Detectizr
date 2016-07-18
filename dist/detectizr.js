@@ -5,7 +5,7 @@
  * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright 2012
  * Released under the MIT license
  *
- * Date: 2016-07-18T15:34Z
+ * Date: 2016-07-18T17:12Z
  */
 window.Detectizr = (function(window, navigator, document, undefined) {
 	var Detectizr = {},
@@ -461,6 +461,8 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 				browser.engine = "webkit";
 				browser.name = "chrome";
 				setVersion(browser, (test(/chrome\/([\d\.]+)/) ? RegExp.$1 : ""));
+			} else if (test(/epiphany/)) {
+				browser.name = "epiphany";
 			} else if (is("iron")) {
 				browser.engine = "webkit";
 				browser.name = "iron";

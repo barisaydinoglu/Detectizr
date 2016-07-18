@@ -461,6 +461,8 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 				browser.engine = "webkit";
 				browser.name = "chrome";
 				setVersion(browser, (test(/chrome\/([\d\.]+)/) ? RegExp.$1 : ""));
+			} else if (test(/epiphany/)) {
+				browser.name = "epiphany";
 			} else if (is("iron")) {
 				browser.engine = "webkit";
 				browser.name = "iron";
