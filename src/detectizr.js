@@ -441,6 +441,9 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 				} else {
 					setVersion(browser, (test(/trident\/4\.0/) ? "8" : RegExp.$1));
 				}
+			} else if (test(/iceweasel/)){
+				browser.name = "iceweasel";
+				browser.engine = "gecko";
 			} else if (is("firefox")) {
 				browser.engine = "gecko";
 				browser.name = "firefox";
@@ -463,6 +466,7 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 				setVersion(browser, (test(/chrome\/([\d\.]+)/) ? RegExp.$1 : ""));
 			} else if (test(/epiphany/)) {
 				browser.name = "epiphany";
+				browser.engine = "webkitgtk";
 			} else if (is("iron")) {
 				browser.engine = "webkit";
 				browser.name = "iron";
@@ -470,6 +474,9 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 				browser.name = "chrome";
 				browser.engine = "webkit";
 				setVersion(browser, (test(/crios\/([\d\.]+)/) ? RegExp.$1 : ""));
+			} else if (test(/midori/)) {
+				browser.name = "midori";
+				browser.engine = "webkit";
 			} else if (is("applewebkit/")) {
 				browser.name = "safari";
 				browser.engine = "webkit";
