@@ -46,6 +46,11 @@ Just remember to include Modernizr before Detectizr, and you're good to go!
 
 Licensed under MIT license.
 
+##Note for Modernizr 3.x
+
+You will need to have a build of Modernizr with the addTest (Modernizr.addTest()) option.
+If done from the website, you can find it 
+
 ##Other interesting projects
 
 * [Modernizr](https://github.com/Modernizr/Modernizr "Modernizr") is required for Detectizer. Remember to put Modernizr before Detectizr.
