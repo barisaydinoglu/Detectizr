@@ -38,6 +38,14 @@ var userAgentsToTest = [{
 	dt: "desktop",
 	dm: ""
 }, {
+	ua: "Mozilla/5.0 (iPhone; CPU iPhone OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) FxiOS/1.0 Mobile/12F69 Safari/600.1.4",
+	b: "firefox",
+	bv: "1",
+	os: "ios",
+	osv: "8",
+	dt: "mobile",
+	dm: "iphone"
+}, {
   ua: "Mozilla/5.0 (Linux; Android 6.0.1; SHIELD Tablet K1 Build version MRA58K AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.89 Safari/537.36",
   b: "chrome",
   bv: "50",
