@@ -465,6 +465,10 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 				browser.name = "chrome";
 				browser.engine = "webkit";
 				setVersion(browser, (test(/crios\/([\d\.]+)/) ? RegExp.$1 : ""));
+			} else if (is("fxios")) {
+				browser.name = "firefox";
+				browser.engine = "webkit";
+				setVersion(browser, (test(/fxios\/([\d\.]+)/) ? RegExp.$1 : ""));
 			} else if (is("applewebkit/")) {
 				browser.name = "safari";
 				browser.engine = "webkit";
