@@ -2,6 +2,7 @@
 [![Build Status](https://secure.travis-ci.org/barisaydinoglu/Detectizr.png?branch=master)](https://travis-ci.org/barisaydinoglu/Detectizr)
 [![Stories in Ready](https://badge.waffle.io/barisaydinoglu/detectizr.png?label=ready)](https://waffle.io/barisaydinoglu/detectizr)
 [![devDependency Status](https://david-dm.org/barisaydinoglu/detectizr/dev-status.png?theme=shields.io)](https://david-dm.org/barisaydinoglu/detectizr#info=devDependencies)
+[![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/detectizr/badge?style=rounded)](https://www.jsdelivr.com/package/npm/detectizr)
 
 
 Detectizr is a Modernizr extension to detect
